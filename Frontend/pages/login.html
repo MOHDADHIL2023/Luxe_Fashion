@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUXE - Login/Signup</title>
+    <link rel="stylesheet" href="/Frontend/css/styles.css">
+    <link rel="stylesheet" href="/Frontend/css/styles6.css">
+    <link rel="icon" type="image/x-icon" href="/Frontend/images/LUXE LOGO.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    
+    <div class="form-container-wrap">
+
+        <div class="logo-center">
+            <a href="/Frontend/index.html" class="LOGO">LU<span class="LOGO1">XE</span><span class="LOGO2">.</span></a>
+        </div>
+
+        <h1 id="main-auth-title" class="auth-main-title">LOGIN FORM</h1>
+
+        <!-- toggle buttons -->
+        <div class="auth-toggle-group">
+            <button id="login-tab" class="auth-toggle-button active" onclick="showForm('login')">
+                Login
+            </button>
+            <button id="signup-tab" class="auth-toggle-button" onclick="showForm('signup')">
+                Signup
+            </button>
+        </div>
+
+        <!-- login form -->
+        <form id="login-form" class="auth-form" onsubmit="handleAuth(event, 'login')">
+            <div class="form-group">
+                <label for="login-email">Email Address</label>
+                <input type="email" id="login-email" placeholder="Enter Your Email" required>
+            </div>
+            <div class="form-group">
+                <label for="login-password">Password</label>
+                <input type="password" id="login-password" placeholder="Enter Password" required>
+            </div>
+            <a href="#" class="forgot-password">Forgot Password?</a>
+            <button type="submit" class="btn-submit">Login</button>
+        </form>
+
+        <!-- signup form -->
+        <form id="signup-form" class="auth-form hidden" onsubmit="handleAuth(event, 'signup')">
+            <div class="form-group">
+                <label for="signup-name">Full Name</label>
+                <input type="text" id="signup-name" placeholder="Your Full Name" required>
+            </div>
+            <div class="form-group">
+                <label for="signup-email">Email Address</label>
+                <input type="email" id="signup-email" placeholder="Your Email Address" required>
+            </div>
+            <div class="form-group">
+                <label for="signup-password">Password</label>
+                <input type="password" id="signup-password" placeholder="Create Password" required minlength="6">
+            </div>
+            <div class="form-group">
+                <label for="signup-confirm-password">Confirm Password</label>
+                <input type="password" id="signup-confirm-password" placeholder="Re-enter Password" required minlength="6">
+            </div>
+            <button type="submit" class="btn-submit">Signup</button>
+
+            <div class="auth-footer-inline">
+                <div class="divider">Already A Member?</div>
+                <a href="#" class="footer-link" onclick="showForm('login'); return false;">LOGIN NOW</a>
+            </div>
+        </form>
+
+        <div class="auth-footer">
+    <div class="divider">OR Register With</div>
+
+    <!-- 1. HIDDEN CONFIGURATION FOR GOOGLE -->
+    <div id="g_id_onload"
+         data-client_id="46629384050-lmcb75sc7a8g69sc1s0hbt1rh3ahnelf.apps.googleusercontent.com"
+         data-context="signin"
+         data-ux_mode="popup"
+         data-callback="handleGoogleResponse"
+         data-auto_prompt="false">
+    </div>
+
+    <!-- 2. CONTAINER FOR THE OFFICIAL GOOGLE BUTTON -->
+    <!-- The JavaScript will inject the button here automatically -->
+    <div id="google-btn-container"></div>
+
+    <!-- 3. APPLE BUTTON -->
+    <button class="btn-apple" onclick="signInWithApple()">
+        <i class="fab fa-apple"></i>
+        Apple
+    </button>
+</div>
+    </div>
+
+    <script src="/Frontend/js/script6.js"></script>
+    <script src="/Frontend/js/config.js"></script> 
+
+</body>
+</html>

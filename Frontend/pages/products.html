@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUXE - All Collections</title>
+    <link rel="stylesheet" href="/Frontend/css/styles.css">
+    <link rel="stylesheet" href="/Frontend/css/styles1.css">
+    <link rel="icon" type="image/x-icon" href="/Frontend/images/LUXE LOGO.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    
+    <!-- Header/Navigation Section -->
+    <header class="container">
+        <div class="header-content">
+            <!-- Logo Structure for styling -->
+            <a href="/Frontend/index.html" class="LOGO">LU<span class="LOGO1">XE</span><span class="LOGO2">.</span></a>
+
+            <nav class="nav-desktop">
+                <a href="/Frontend/index.html">HOME</a>
+                <a href="/Frontend/pages/products.html">PRODUCTS</a>
+                <a href="/Frontend/pages/categories.html">CATEGORIES</a>
+                <a href="/Frontend/pages/about.html">ABOUT</a>
+                <a href="/Frontend/pages/blog.html">BLOG</a>
+                <a href="/Frontend/pages/contact.html">CONTACT</a>
+            </nav>
+
+            <div class="button-icons">
+                <button class="Search-Button" onclick="handleSearchClick()">
+                    <i class="fas fa-search"></i> 
+                </button>
+
+                <button class="Cart-Button" onclick="addToCartBtn()">
+                    <i class="fas fa-shopping-cart"></i> 
+                </button>
+
+                <button class="Login-Signup-Button" onclick="handleLoginSignup()">
+                    <i class="fa fa-user"></i> 
+                </button>
+
+                <button class="Menu-Button" id="menu-button" aria-expanded="false" aria-controls="menu-button">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Off-Canvas -->
+    <div id="menu-mobile" class="Menu-Mobile">
+        <div class="menu-content">
+            <button class="Close-Menu-Button" id="close-menu-button" aria-expanded="false" aria-controls="menu-button">
+                <i class="fa fa-bars"></i>
+            </button>
+                <a href="/Frontend/index.html">HOME</a>
+                <a href="/Frontend/pages/products.html">PRODUCTS</a>
+                <a href="/Frontend/pages/categories.html">CATEGORIES</a>
+                <a href="/Frontend/pages/about.html">ABOUT</a>
+                <a href="/Frontend/pages/blog.html">BLOG</a>
+                <a href="/Frontend/pages/contact.html">CONTACT</a>
+        </div>
+    </div>
+
+    <!-- Products Hero Section -->
+    <main class="Products-Hero-Section">
+        <div class="Hero-Content">
+            <h1 class="text-animation">
+                Our
+                <span class="Block-Logo">Collections</span>
+            </h1>
+
+            <p class="text-animation" style="animation-delay: 0.4s;">
+                Discover our carefully chosen selection of luxury fashion pieces. 
+                These items are picked for individuals with refined taste.
+            </p>
+        </div>
+    </main>
+
+    <!-- Category Filter Tags and Sort Bar -->
+    <section class="tag-filter-bar">
+        <div class="filter-sort-header">
+            <!-- Filter Section Tag -->
+            <div class="tag-list" id="category-filter-tags">
+                <button class="filter-tag active" data-category="all">
+                    <i class="fas fa-th"></i> ALL
+                </button>
+                <button class="filter-tag" data-category="mens-fashion">
+                    <i class="fas fa-male"></i> MEN
+                </button>
+                <button class="filter-tag" data-category="womens-fashion">
+                    <i class="fas fa-female"></i> WOMEN
+                </button>
+                <button class="filter-tag" data-category="accessories">
+                    <i class="fas fa-gem"></i> ACCESSORIES
+                </button>
+                <button class="filter-tag" data-category="footwear">
+                    <i class="fas fa-shoe-prints"></i> FOOTWEAR
+                </button>
+                <button class="filter-tag" data-category="bags">
+                    <i class="fas fa-shopping-bag"></i> BAGS
+                </button>
+                <button class="filter-tag" data-category="jewelry">
+                    <i class="fas fa-ring"></i> JEWELRY
+                </button>
+            </div>
+
+            <!-- Sort Dropdown -->
+            <div class="sort-dropdown-container">
+                <label for="sort-by">
+                    <i class="fas fa-sort"></i>
+                </label>
+                <select id="sort-by">
+                    <option value="featured">FEATURED</option>
+                    <option value="price-asc">Price: Low to High</option>
+                    <option value="price-desc">Price: High to Low</option>
+                    <option value="newest">Newest First</option>
+                    <option value="rating">Top Rated</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Grid Section -->
+    <section class="product-listing-area container">
+        <!-- Product Count Info -->
+        <div class="products-info-bar">
+            <h2 id="product-count-display">Showing all products</h2>
+            <button class="view-mode-toggle" onclick="toggleViewMode()" title="Toggle Grid/List View">
+                <i class="fas fa-th" id="view-mode-icon"></i>
+            </button>
+        </div>
+
+        <div class="full-product-grid" id="product-grid">
+            <!-- Product items will be dynamically injected here by JavaScript -->
+        </div>
+
+        <!-- Loading State -->
+        <div id="loading-state" class="loading-state hidden">
+            <div class="spinner"></div>
+            <p>Loading products...</p>
+        </div>
+
+        <!-- No Products State -->
+        <div id="no-products-state" class="no-products-state hidden">
+            <i class="fas fa-box-open"></i>
+            <h3>No Products Found</h3>
+            <p>Try adjusting your filters or search criteria.</p>
+            <button class="reset-filters-btn" onclick="resetFilters()">
+                <i class="fas fa-redo"></i> Reset Filters
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-content">
+            <!-- column number 1 logo and description -->
+            <div class="footer-column footer-logo-col">
+                <div class="footer-logo">
+                    <a href="/Frontend/index.html" class="LOGO5">LU<span class="LOGO6">XE</span><span class="LOGO7">.</span></a>
+                </div>
+                <p class="footer-description">
+                    Curated fashion for the modern wardrobe. Find quality pieces 
+                    that define elegance and sophistication.
+                </p>
+            </div>
+
+            <!-- column number two shop links -->
+            <div class="footer-column footer-links">
+                <h4>Shop</h4>
+                <a href="/Frontend/pages/products.html">All Products</a>
+                <a href="/Frontend/pages/categories.html">Categories</a>
+            </div>
+
+            <!-- column number three account links -->
+            <div class="footer-column footer-links">
+                <h4>Account</h4>
+                <a href="/Frontend/pages/orders.html">My Orders</a>
+                <a href="/Frontend/pages/cart.html">Shopping Cart</a>
+            </div>
+
+            <!-- column number four support links -->
+            <div class="footer-column footer-links">
+                <h4>Support</h4>
+                <a href="#">My Account</a>
+                <a href="/Frontend/pages/contact.html">Contact Us</a>
+                <a href="#">FAQ</a>
+            </div>
+
+            <!-- column number five connect / social media -->
+            <div class="footer-column footer-links">
+                <h4>Connect</h4>
+                <div class="social-icons">
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- copyrights and credits tag -->
+        <div class="copyright">
+            &copy; 2025 LUXE. All rights reserved. Made By Adil Hossain
+        </div>
+    </footer>
+
+    <script src="/Frontend/js/script.js"></script>
+    <script src="/Frontend/js/config.js"></script> 
+    <script src="/Frontend/js/script1.js"></script>
+</body>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUXE. Contact Us</title>
+    <link rel="stylesheet" href="/Frontend/css/styles.css">
+    <link rel="stylesheet" href="/Frontend/css/styles5.css">
+    <link rel="icon" type="image/x-icon" href="/Frontend/images/LUXE LOGO.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    
+    <!-- Header/Navigation Section -->
+    <header class="container">
+        <div class="header-content">
+            <!-- Logo Structure for styling -->
+            <a href="/Frontend/index.html" class="LOGO">LU<span class="LOGO1">XE</span><span class="LOGO2">.</span></a>
+
+            <nav class="nav-desktop">
+                <a href="/Frontend/index.html">HOME</a>
+                <a href="/Frontend/pages/products.html">PRODUCTS</a>
+                <a href="/Frontend/pages/categories.html">CATEGORIES</a>
+                <a href="/Frontend/pages/about.html">ABOUT</a>
+                <a href="/Frontend/pages/blog.html">BLOG</a>
+                <a href="/Frontend/pages/contact.html">CONTACT</a>
+            </nav>
+
+            <div class="button-icons">
+                <button class="Search-Button" onclick="handleSearchClick()">
+                    <i class="fas fa-search"></i> 
+                </button>
+
+                <button class="Cart-Button" onclick="addToCartBtn()">
+                    <i class="fas fa-shopping-cart"></i> 
+                </button>
+
+                <button class="Login-Signup-Button" onclick="handleLoginSignup()">
+                    <i class="fa fa-user"></i> 
+                </button>
+
+                <button class="Menu-Button" id="menu-button" aria-expanded="false" aria-controls="menu-button">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Off-Canvas -->
+    <div id="menu-mobile" class="Menu-Mobile">
+        <div class="menu-content">
+            <button class="Close-Menu-Button" id="close-menu-button" aria-expanded="false" aria-controls="menu-button">
+                <i class="fa fa-bars"></i>
+            </button>
+                <a href="/Frontend/index.html">HOME</a>
+                <a href="/Frontend/pages/products.html">PRODUCTS</a>
+                <a href="/Frontend/pages/categories.html">CATEGORIES</a>
+                <a href="/Frontend/pages/about.html">ABOUT</a>
+                <a href="/Frontend/pages/blog.html">BLOG</a>
+                <a href="/Frontend/pages/contact.html">CONTACT</a>
+        </div>
+    </div>
+
+    <!-- Contact hero section which is to contact us -->
+    <main class="Contact-Hero-Section">
+        <div class="Contact-Content">
+            <h1 class="text-animation">
+                Get in
+                <span class="Block-Logo">Touch</span>
+            </h1>
+
+            <p class="text-animation" style="animation-delay: 0.4s;">
+                We want to hear from you. Please get in touch 
+                with any questions, concerns, or feedback.
+            </p>
+        </div>
+    </main>
+
+    <main class="py-16 md:py-24">
+        
+        <!-- Contact Information Section -->
+        <section class="contact-container text-center">
+            <h1 class="section-title animate-on-load">Contact Information</h1>
+            <p class="contact-paragraph animate-on-load" style="animation-delay: 0.3s;">
+                Our customer service team is here to help you with any inquiries. Feel free to reach out through any of the channels below.
+            </p>
+            
+            <div class="info-grid">
+                
+                <!-- Card 1: Address -->
+                <div class="info-card" style="animation-delay: 0.5s;">
+                    <div class="icon-circle">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3>Address</h3>
+                    <p>125 Fashion Avenue</p>
+                    <p>New York, NY 10001</p>
+                    <p>United States</p>
+                </div>
+                
+                <!-- Card 2: Phone -->
+                <div class="info-card" style="animation-delay: 0.7s;">
+                    <div class="icon-circle">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <h3>Call Us</h3>
+                    <p>+1 (555) 123-4567</p>
+                    <p>Toll Free: 1-800-LUXE-SHOP</p>
+                </div>
+                
+                <!-- Card 3: Email -->
+                <div class="info-card" style="animation-delay: 0.9s;">
+                    <div class="icon-circle">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Email Support</h3>
+                    <p>info@luxefashion.com</p>
+                    <p>support@luxefashion.com</p>
+                </div>
+                
+                <!-- Card 4: Hours -->
+                <div class="info-card" style="animation-delay: 1.1s;">
+                    <div class="icon-circle">
+                        <i class="far fa-clock"></i>
+                    </div>
+                    <h3>Business Hours</h3>
+                    <p>Mon - Fri: 9:00 AM - 6:00 PM</p>
+                    <p>Sat: 10:00 AM - 4:00 PM</p>
+                    <p>Sun: Closed</p>
+                </div>
+                
+            </div>
+        </section>
+        
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <div class="faq-container">
+                <h2 class="faq-text">Frequently Asked Questions</h2>
+                
+                <div id="faq-accordion" class="space-y-4">
+                    
+                    <!-- FAQ Item 1: Returns -->
+                    <div class="accordion-item" style="animation-delay: 0.1s;">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h3>What is your return policy?</h3>
+                            <i class="fas fa-plus accordion-icon"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>We have a 30-day return policy for all unworn items with the original tags still attached. Please reach out to our customer service team to start a return.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 2: Shipping -->
+                    <div class="accordion-item" style="animation-delay: 0.2s;">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h3>Do you ship internationally?</h3>
+                            <i class="fas fa-plus accordion-icon"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Yes, we ship to over 100 countries around the world. Shipping costs and delivery times depend on the location and will be calculated at checkout.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 3: Authenticity -->
+                    <div class="accordion-item" style="animation-delay: 0.3s;">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h3>Are your products authentic?</h3>
+                            <i class="fas fa-plus accordion-icon"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Absolutely. We guarantee that all our products are 100% authentic, sourced directly from authorized distributors and designers, ensuring premium quality.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 4: Tracking -->
+                    <div class="accordion-item" style="animation-delay: 0.4s;">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h3>How can I track my order?</h3>
+                            <i class="fas fa-plus accordion-icon"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>After your order ships, you'll get a tracking number through email. You can also track your order status by logging into your customer account on our website.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Send Us a Message Section -->
+        <section class="contact-form-section">
+            <div class="container">
+                <div class="form-content-wrap">
+                    
+                    <div class="form-text-side">
+                        <h2 class="section-title">Send Us a Message</h2>
+                    </div>
+
+                    <form class="contact-form" onsubmit="handleContactForm(event)">
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="name">Name</label>
+                                <input type="text" id="name" placeholder="YOUR NAME" required>
+                            </div>
+                            <div>
+                                <label for="email">Email</label>
+                                <input type="email" id="email" placeholder="YOU@GMAIL.COM" required>
+                            </div>
+                        </div>
+                        
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" placeholder="HOW CAN WE HELP?" required>
+                        
+                        <label for="message">Message</label>
+                        <textarea id="message" placeholder="YOUR MESSAGE...." required></textarea>
+                        
+                        <button type="submit" class="btn-submit">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- footer section tag -->
+     <footer>
+        <div class="footer-content">
+
+            <!-- column number 1 logo and description -->
+            <div class="footer-column footer-logo-col">
+                <div class="footer-logo">
+                    <a href="/Frontend/index.html" class="LOGO5">LU<span class="LOGO6">XE</span><span class="LOGO7">.</span></a>
+                </div>
+                <p class="footer-description">
+                    Curated fashion for the modern wardrobe. Find quality pieces 
+                    that define elegance and sophistication.
+                </p>
+            </div>
+
+            <!-- column number two shop links -->
+            <div class="footer-column footer-links">
+                <h4>Shop</h4>
+                <a href="/Frontend/pages/products.html">All Products</a>
+                <a href="/Frontend/pages/categories.html">Categories</a>
+            </div>
+
+            <!-- column number three account links -->
+            <div class="footer-column footer-links">
+                <h4>Account</h4>
+                <a href="/Frontend/pages/orders.html">My Orders</a>
+                <a href="/Frontend/pages/cart.html">Shopping Cart</a>
+            </div>
+
+            <!-- column number four support links -->
+            <div class="footer-column footer-links">
+                <h4>Support</h4>
+                <a href="#">My Account</a>
+                <a href="/Frontend/pages/contact.html">Contact Us</a>
+                <a href="#">FAQ</a>
+            </div>
+
+            <!-- column number five connect / social media -->
+            <div class="footer-column footer-links">
+                <h4>Connect</h4>
+                <div class="social-icons">
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- copyrights and credits tag -->
+        <div class="copyright">
+            &copy; 2025 LUXE. All rights reserved. Made By Adil Hossain
+        </div>
+     </footer>
+
+    <script src="/Frontend/js/script.js"></script>
+    <script src="/Frontend/js/script5.js"></script>
+
+</body>
+</html>

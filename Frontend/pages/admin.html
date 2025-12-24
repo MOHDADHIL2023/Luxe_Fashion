@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUXE - Admin Panel</title>
+    <link rel="stylesheet" href="/Frontend/css/styles.css">
+    <link rel="stylesheet" href="/Frontend/css/styles-admin.css">
+    <link rel="icon" type="image/x-icon" href="/Frontend/images/LUXE LOGO.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    
+    <!-- Header/Navigation Section -->
+    <header class="container">
+        <div class="header-content">
+            <a href="/Frontend/index.html" class="LOGO">LU<span class="LOGO1">XE</span><span class="LOGO2">.</span></a>
+
+            <nav class="nav-desktop">
+                <a href="/Frontend/index.html">HOME</a>
+                <a href="/Frontend/pages/products.html">PRODUCTS</a>
+                <a href="/Frontend/pages/categories.html">CATEGORIES</a>
+                <a href="/Frontend/pages/about.html">ABOUT</a>
+                <a href="/Frontend/pages/blog.html">BLOG</a>
+                <a href="/Frontend/pages/contact.html">CONTACT</a>
+            </nav>
+
+            <div class="button-icons">
+                <button class="Search-Button" onclick="handleSearchClick()">
+                    <i class="fas fa-search"></i> 
+                </button>
+
+                <button class="Cart-Button" onclick="addToCartBtn()">
+                    <i class="fas fa-shopping-cart"></i> 
+                </button>
+
+                <button class="Login-Signup-Button" onclick="handleLoginSignup()">
+                    <i class="fa fa-user"></i> 
+                </button>
+
+                <button class="Menu-Button" id="menu-button">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Off-Canvas -->
+    <div id="menu-mobile" class="Menu-Mobile">
+        <div class="menu-content">
+            <button class="Close-Menu-Button" id="close-menu-button">
+                <i class="fa fa-bars"></i>
+            </button>
+            <a href="/Frontend/index.html">HOME</a>
+            <a href="/Frontend/pages/products.html">PRODUCTS</a>
+            <a href="/Frontend/pages/categories.html">CATEGORIES</a>
+            <a href="/Frontend/pages/about.html">ABOUT</a>
+            <a href="/Frontend/pages/blog.html">BLOG</a>
+            <a href="/Frontend/pages/contact.html">CONTACT</a>
+        </div>
+    </div>
+
+    <!-- Admin Hero Section -->
+    <main class="Admin-Hero-Section">
+        <div class="Admin-Content">
+            <h1 class="text-animation">
+                Admin
+                <span class="Block-Logo">Dashboard</span>
+            </h1>
+            <p class="text-animation" style="animation-delay: 0.4s;">
+                Manage your store's users, orders, and product catalog
+            </p>
+        </div>
+    </main>
+
+    <!-- Admin Panel Content -->
+    <main class="admin-container">
+        
+        <!-- Tab Navigation -->
+        <div class="admin-tabs">
+            <button class="tab-btn active" data-tab="users">
+                <i class="fas fa-users"></i> Users
+            </button>
+            <button class="tab-btn" data-tab="orders">
+                <i class="fas fa-shopping-bag"></i> Orders
+            </button>
+            <button class="tab-btn" data-tab="products">
+                <i class="fas fa-box"></i> Products
+            </button>
+            <button class="tab-btn" data-tab="stats">
+                <i class="fas fa-chart-line"></i> Statistics
+            </button>
+        </div>
+
+        <!-- Users Tab -->
+        <div class="tab-content active" id="users-tab">
+            <div class="content-header">
+                <h2>User Management</h2>
+                <button class="btn-primary" onclick="openUserModal()">
+                    <i class="fas fa-user-plus"></i> Add New User
+                </button>
+            </div>
+
+            <div class="search-bar">
+                <input type="text" id="user-search" placeholder="Search users by name or email...">
+                <i class="fas fa-search"></i>
+            </div>
+
+            <div class="table-container">
+                <table id="users-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Joined</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-tbody">
+                        <!-- Users will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Orders Tab -->
+        <div class="tab-content" id="orders-tab">
+            <div class="content-header">
+                <h2>Order Management</h2>
+                <button class="btn-primary" onclick="openOrderModal()">
+                    <i class="fas fa-plus"></i> Add New Order
+                </button>
+            </div>
+
+            <div class="search-bar">
+                <input type="text" id="order-search" placeholder="Search orders by ID or customer...">
+                <i class="fas fa-search"></i>
+            </div>
+
+            <div class="table-container">
+                <table id="orders-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Total</th>
+                            <th>Items</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orders-tbody">
+                        <!-- Orders will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Products Tab -->
+        <div class="tab-content" id="products-tab">
+            <div class="content-header">
+                <h2>Product Management</h2>
+                <button class="btn-primary" onclick="openProductModal()">
+                    <i class="fas fa-plus"></i> Add New Product
+                </button>
+            </div>
+
+            <div class="search-bar">
+                <input type="text" id="product-search" placeholder="Search products by name or category...">
+                <i class="fas fa-search"></i>
+            </div>
+
+            <div class="table-container">
+                <table id="products-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Stock</th>
+                            <th>Rating</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="products-tbody">
+                        <!-- Products will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Statistics Tab -->
+        <div class="tab-content" id="stats-tab">
+            <div class="content-header">
+                <h2>Statistics Overview</h2>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon users-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="total-users">0</h3>
+                        <p>Total Users</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon orders-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="total-orders">0</h3>
+                        <p>Total Orders</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon products-icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="total-products">0</h3>
+                        <p>Total Products</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon revenue-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="total-revenue">0 DHS</h3>
+                        <p>Total Revenue</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- User Modal -->
+    <div id="user-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="user-modal-title">Add New User</h2>
+                <button class="close-btn" onclick="closeUserModal()">&times;</button>
+            </div>
+            <form id="user-form">
+                <input type="hidden" id="user-id">
+                
+                <div class="form-group">
+                    <label>Name *</label>
+                    <input type="text" id="user-name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Email *</label>
+                    <input type="email" id="user-email" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Role *</label>
+                    <select id="user-role" required>
+                        <option value="customer">Customer</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Status *</label>
+                    <select id="user-status" required>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeUserModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Save User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Order Modal -->
+    <div id="order-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="order-modal-title">Add New Order</h2>
+                <button class="close-btn" onclick="closeOrderModal()">&times;</button>
+            </div>
+            <form id="order-form">
+                <input type="hidden" id="order-id">
+                
+                <div class="form-group">
+                    <label>Customer Name *</label>
+                    <input type="text" id="order-customer" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Order Date *</label>
+                    <input type="date" id="order-date" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Status *</label>
+                    <select id="order-status" required>
+                        <option value="pending">Pending</option>
+                        <option value="processing">Processing</option>
+                        <option value="shipped">Shipped</option>
+                        <option value="delivered">Delivered</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Total Amount *</label>
+                    <input type="number" step="0.01" id="order-total" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Items (comma-separated)</label>
+                    <input type="text" id="order-items" placeholder="Watch, Coat, Sunglasses">
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeOrderModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Order</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Product Modal -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="product-modal-title">Add New Product</h2>
+                <button class="close-btn" onclick="closeProductModal()">&times;</button>
+            </div>
+            <form id="product-form">
+                <input type="hidden" id="product-id">
+                
+                <div class="form-group">
+                    <label>Product Name *</label>
+                    <input type="text" id="product-name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Category *</label>
+                    <select id="product-category" required>
+                        <option value="mens-fashion">Men's Fashion</option>
+                        <option value="womens-fashion">Women's Fashion</option>
+                        <option value="accessories">Accessories</option>
+                        <option value="footwear">Footwear</option>
+                        <option value="bags">Bags</option>
+                        <option value="jewelry">Jewelry</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Price (DHS) *</label>
+                    <input type="number" step="0.01" id="product-price" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Stock Status *</label>
+                    <select id="product-stock" required>
+                        <option value="true">In Stock</option>
+                        <option value="false">Out of Stock</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Rating (0-5)</label>
+                    <input type="number" step="0.1" min="0" max="5" id="product-rating" value="4.5">
+                </div>
+
+                <div class="form-group">
+                    <label>Image URL</label>
+                    <input type="url" id="product-image" placeholder="https://example.com/image.jpg">
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <label>
+                        <input type="checkbox" id="product-new">
+                        New Product
+                    </label>
+                    <label>
+                        <input type="checkbox" id="product-sale">
+                        On Sale
+                    </label>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeProductModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column footer-logo-col">
+                <div class="footer-logo">
+                    <a href="/Frontend/index.html" class="LOGO5">LU<span class="LOGO6">XE</span><span class="LOGO7">.</span></a>
+                </div>
+                <p class="footer-description">
+                    Curated fashion for the modern wardrobe. Find quality pieces 
+                    that define elegance and sophistication.
+                </p>
+            </div>
+
+            <div class="footer-column footer-links">
+                <h4>Shop</h4>
+                <a href="/Frontend/pages/products.html">All Products</a>
+                <a href="/Frontend/pages/categories.html">Categories</a>
+            </div>
+
+            <div class="footer-column footer-links">
+                <h4>Account</h4>
+                <a href="/Frontend/pages/orders.html">My Orders</a>
+                <a href="/Frontend/pages/cart.html">Shopping Cart</a>
+            </div>
+
+            <div class="footer-column footer-links">
+                <h4>Support</h4>
+                <a href="#">My Account</a>
+                <a href="/Frontend/pages/contact.html">Contact Us</a>
+                <a href="#">FAQ</a>
+            </div>
+
+            <div class="footer-column footer-links">
+                <h4>Connect</h4>
+                <div class="social-icons">
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="copyright">
+            &copy; 2025 LUXE. All rights reserved. Made By Adil Hossain
+        </div>
+    </footer>
+
+    <script src="/Frontend/js/script.js"></script>
+    <script src="/Frontend/js/script-admin.js"></script>
+</body>
+</html>

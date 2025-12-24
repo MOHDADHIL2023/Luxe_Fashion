@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUXE - Order History</title>
+    <link rel="stylesheet" href="/Frontend/css/styles.css">
+    <link rel="stylesheet" href="/Frontend/css/styles8.css">
+    <link rel="icon" type="image/x-icon" href="/Frontend/images/LUXE LOGO.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    
+    <!-- Header/Navigation Section -->
+    <header class="container">
+        <div class="header-content">
+            <!-- Logo Structure for styling -->
+            <a href="/Frontend/index.html" class="LOGO">LU<span class="LOGO1">XE</span><span class="LOGO2">.</span></a>
+
+            <nav class="nav-desktop">
+                <a href="/Frontend/index.html">HOME</a>
+                <a href="/Frontend/pages/products.html">PRODUCTS</a>
+                <a href="/Frontend/pages/categories.html">CATEGORIES</a>
+                <a href="/Frontend/pages/about.html">ABOUT</a>
+                <a href="/Frontend/pages/blog.html">BLOG</a>
+                <a href="/Frontend/pages/contact.html">CONTACT</a>
+            </nav>
+
+            <div class="button-icons">
+                <button class="Search-Button" onclick="handleSearchClick()">
+                    <i class="fas fa-search"></i> 
+                </button>
+
+                <button class="Cart-Button" onclick="addToCartBtn()">
+                    <i class="fas fa-shopping-cart"></i> 
+                </button>
+
+                <button class="Login-Signup-Button" onclick="handleLoginSignup()">
+                    <i class="fa fa-user"></i> 
+                </button>
+
+                <button class="Menu-Button" id="menu-button" aria-expanded="false" aria-controls="menu-button">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Off-Canvas -->
+    <div id="menu-mobile" class="Menu-Mobile">
+        <div class="menu-content">
+            <button class="Close-Menu-Button" id="close-menu-button" aria-expanded="false" aria-controls="menu-button">
+                <i class="fa fa-bars"></i>
+            </button>
+                <a href="/Frontend/index.html">HOME</a>
+                <a href="/Frontend/pages/products.html">PRODUCTS</a>
+                <a href="/Frontend/pages/categories.html">CATEGORIES</a>
+                <a href="/Frontend/pages/about.html">ABOUT</a>
+                <a href="/Frontend/pages/blog.html">BLOG</a>
+                <a href="/Frontend/pages/contact.html">CONTACT</a>
+        </div>
+    </div>
+
+    <!-- Orders Hero Section -->
+    <main class="Orders-Hero-Section">
+        <div class="Orders-Content">
+            <h1 class="text-animation">
+                Your
+                <span class="Block-Logo">Orders</span>
+            </h1>
+
+            <p class="text-animation" style="animation-delay: 0.4s;">
+                Track and manage all your luxury fashion purchases in one place.
+            </p>
+        </div>
+    </main>
+
+    <!-- Main Content Area -->
+    <main class="container py-8">
+        <!-- Loading Overlay -->
+        <div id="auth-guard" class="loading-overlay">
+            <div class="spinner"></div>
+            <p>Loading your orders...</p>
+        </div>
+
+        <!-- Order History Section -->
+        <section id="orders-content" class="hidden">
+            <div class="orders-header">
+                <h2 class="dashboard-title">
+                    <i class="fas fa-history"></i> Order History
+                </h2>
+                <div class="order-stats">
+                    <div class="stat-badge">
+                        <span id="total-orders-count">0</span>
+                        <span>Total Orders</span>
+                    </div>
+                    <div class="stat-badge">
+                        <span id="total-spent">0 DHS</span>
+                        <span>Total Spent</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="order-list" class="order-list">
+                <!-- Order cards will be injected here by JavaScript -->
+            </div>
+            
+            <!-- No Orders Message -->
+            <div id="no-orders-message" class="no-orders-state hidden">
+                <i class="fas fa-shopping-bag"></i>
+                <h3>No Orders Yet</h3>
+                <p>You haven't placed any orders yet. Start shopping to see your order history here!</p>
+                <a href="/Frontend/pages/products.html" class="shop-now-btn">
+                    <i class="fas fa-shopping-cart"></i> Start Shopping
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-content">
+            <!-- column number 1 logo and description -->
+            <div class="footer-column footer-logo-col">
+                <div class="footer-logo">
+                    <a href="/Frontend/index.html" class="LOGO5">LU<span class="LOGO6">XE</span><span class="LOGO7">.</span></a>
+                </div>
+                <p class="footer-description">
+                    Curated fashion for the modern wardrobe. Find quality pieces 
+                    that define elegance and sophistication.
+                </p>
+            </div>
+
+            <!-- column number two shop links -->
+            <div class="footer-column footer-links">
+                <h4>Shop</h4>
+                <a href="/Frontend/pages/products.html">All Products</a>
+                <a href="/Frontend/pages/categories.html">Categories</a>
+            </div>
+
+            <!-- column number three account links -->
+            <div class="footer-column footer-links">
+                <h4>Account</h4>
+                <a href="/Frontend/pages/orders.html">My Orders</a>
+                <a href="/Frontend/pages/cart.html">Shopping Cart</a>
+            </div>
+
+            <!-- column number four support links -->
+            <div class="footer-column footer-links">
+                <h4>Support</h4>
+                <a href="#">My Account</a>
+                <a href="/Frontend/pages/contact.html">Contact Us</a>
+                <a href="#">FAQ</a>
+            </div>
+
+            <!-- column number five connect / social media -->
+            <div class="footer-column footer-links">
+                <h4>Connect</h4>
+                <div class="social-icons">
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- copyrights and credits tag -->
+        <div class="copyright">
+            &copy; 2025 LUXE. All rights reserved. Made By Adil Hossain
+        </div>
+    </footer>
+
+    <script src="/Frontend/js/script.js"></script>
+    <script src="/Frontend/js/script8.js"></script>
+</body>
+</html>

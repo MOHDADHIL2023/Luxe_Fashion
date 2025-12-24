@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUXE. Blog</title>
+    <link rel="stylesheet" href="/Frontend/css/styles.css">
+    <link rel="stylesheet" href="/Frontend/css/styles4.css">
+    <link rel="icon" type="image/x-icon" href="/Frontend/images/LUXE LOGO.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    
+    <!-- Header/Navigation Section -->
+    <header class="container">
+        <div class="header-content">
+            <!-- Logo Structure for styling -->
+            <a href="/Frontend/index.html" class="LOGO">LU<span class="LOGO1">XE</span><span class="LOGO2">.</span></a>
+
+            <nav class="nav-desktop">
+                <a href="/Frontend/index.html">HOME</a>
+                <a href="/Frontend/pages/products.html">PRODUCTS</a>
+                <a href="/Frontend/pages/categories.html">CATEGORIES</a>
+                <a href="/Frontend/pages/about.html">ABOUT</a>
+                <a href="/Frontend/pages/blog.html">BLOG</a>
+                <a href="/Frontend/pages/contact.html">CONTACT</a>
+            </nav>
+
+            <div class="button-icons">
+                <button class="Search-Button" onclick="handleSearchClick()" aria-label="Search">
+                    <i class="fas fa-search"></i> 
+                </button>
+
+                <button class="Cart-Button" onclick="addToCartBtn()" aria-label="Shopping Cart">
+                    <i class="fas fa-shopping-cart"></i> 
+                </button>
+
+                <button class="Login-Signup-Button" onclick="handleLoginSignup()" aria-label="Login">
+                    <i class="fa fa-user"></i> 
+                </button>
+
+                <button class="Menu-Button" id="menu-button" aria-expanded="false" aria-controls="menu-mobile" aria-label="Menu">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Off-Canvas -->
+    <div id="menu-mobile" class="Menu-Mobile">
+        <div class="menu-content">
+            <button class="Close-Menu-Button" id="close-menu-button" aria-label="Close Menu">
+                <i class="fa fa-times"></i>
+            </button>
+            <a href="/Frontend/index.html">HOME</a>
+            <a href="/Frontend/pages/products.html">PRODUCTS</a>
+            <a href="/Frontend/pages/categories.html">CATEGORIES</a>
+            <a href="/Frontend/pages/about.html">ABOUT</a>
+            <a href="/Frontend/pages/blog.html">BLOG</a>
+            <a href="/Frontend/pages/contact.html">CONTACT</a>
+        </div>
+    </div>
+
+    <!-- Blog hero section which is our feedback audience -->
+    <main class="Blog-Hero-Section">
+        <div class="Blog-Content">
+            <h1 class="text-animation">
+                <span class="Block-Logo">LU<span class="LOGO3">XE</span><span class="LOGO4">.</span></span>
+                Journal
+            </h1>
+
+            <p class="text-animation" style="animation-delay: 0.4s;">
+                Style ideas, fashion trends, and tips from 
+                our team of fashion experts.
+            </p>
+        </div>
+    </main>
+
+    <!-- featured post section -->
+    <main class="blog-main-content">
+        <div class="featured-container">
+
+            <!-- FEATURED POST SECTION -->
+            <section class="featured-post-card blog-featured">
+                <div class="blog-featured-grid">
+                    
+                    <!-- Left Column: Image with custom styling and new hover effect -->
+                    <div class="image-hover-container">
+                        <img 
+                        src="https://images.unsplash.com/photo-1643963920941-665f49451af0?q=80&w=1170&auto=format&fit=crop" 
+                        onerror="this.onerror=null;this.src='https://placehold.co/600x450/10B981/0A0A0A?text=Featured+Image';"
+                        alt="Featured Article"
+                        >
+                    </div>
+
+                    <!-- Right Column: Text Content -->
+                    <div class="blog-featured-content">
+                        
+                        <!-- Featured Badge -->
+                        <div class="featured-tag featured-badge">Featured Post</div> 
+                        
+                        <h2 class="post-title">The Art of Layering: Mastering Winter Fashion</h2>
+                        
+                        <!-- Metadata using Font Awesome Icons -->
+                        <div class="blog-meta">
+                            <div class="blog-meta-item">
+                                <i class="fa-solid fa-calendar"></i>
+                                <span>November 1, 2025</span>
+                            </div>
+                            <span class="blog-meta-separator">|</span>
+                            <div class="blog-meta-item">
+                                <i class="fa-solid fa-user"></i>
+                                <span>Sarah Johnson</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Description -->
+                        <p class="text-desc">
+                            Discover the secrets to creating stylish, warm outfits that transition seamlessly from day to night.
+                        </p>
+
+                        <!-- Read More Button -->
+                        <button class="btn-secondary">
+                            Read More 
+                            <span>&rarr;</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- LATEST ARTICLES CAROUSEL SECTION -->
+            <section class="latest-articles-section">
+                
+                <!-- Title -->
+                <h2 class="latest-articles-title">Latest Articles</h2>
+                
+                <!-- Carousel Container -->
+                <div class="carousel-container">
+                    
+                    <!-- Navigation Arrows -->
+                    <button class="carousel-nav-btn carousel-prev" id="prev-slide" onclick="scrollSlider(-1)" aria-label="Previous slide">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <button class="carousel-nav-btn carousel-next" id="next-slide" onclick="scrollSlider(1)" aria-label="Next slide">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+
+                    <!-- Slider Viewport -->
+                    <div class="slider-viewport">
+                        <div id="slider-track" class="slider-track">
+                            
+                            <!-- Article Card 1 -->
+                            <div class="article-card-wrap">
+                                <a href="#" class="article-card-content">
+                                    <img class="article-card-image" src="https://images.unsplash.com/photo-1481437156560-3205f6a55735?q=80&w=1195&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="What to Buy for Your Wardrobe">
+                                    <div class="card-details">
+                                        <p class="card-category">Shopping Guide</p>
+                                        <h3 class="card-title">Investment Pieces: What to Buy for Your Wardrobe</h3>
+                                        <p class="card-description">Items which luxury pieces are worth the investment and will serve you for years to come.</p>
+                                        <div class="card-footer">
+                                            <div class="footer-meta">
+                                                <span><i class="fas fa-calendar-alt"></i> November 1, 2025</span>
+                                                <span><i class="fas fa-user-edit"></i> Sarah Johnson</span>
+                                            </div>
+                                            <span class="continue-btn">CONTINUE &rarr;</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <!-- Article Card 2 -->
+                            <div class="article-card-wrap">
+                                <a href="#" class="article-card-content">
+                                    <img class="article-card-image" src="https://plus.unsplash.com/premium_photo-1681276170683-706111cf496e?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Accessory Guide">
+                                    <div class="card-details">
+                                        <p class="card-category">Accessories</p>
+                                        <h3 class="card-title">Accessorizing 101: Elevate Any Outfit</h3>
+                                        <p class="card-description">Five easy accessories that transform a simple outfit into something extraordinary.</p>
+                                        <div class="card-footer">
+                                            <div class="footer-meta">
+                                                <span><i class="fas fa-calendar-alt"></i> October 22, 2025</span>
+                                                <span><i class="fas fa-user-edit"></i> Michael Chen</span>
+                                            </div>
+                                            <span class="continue-btn">CONTINUE &rarr;</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <!-- Article Card 3 -->
+                            <div class="article-card-wrap">
+                                <a href="#" class="article-card-content">
+                                    <img class="article-card-image" src="https://images.unsplash.com/photo-1605289355680-75fb41239154?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Sustainable Luxury">
+                                    <div class="card-details">
+                                        <p class="card-category">Trends</p>
+                                        <h3 class="card-title">Sustainable Luxury: The Future of Fashion</h3>
+                                        <p class="card-description">Explore how luxury fashion brands are embracing sustainable ethics without compromising quality.</p>
+                                        <div class="card-footer">
+                                            <div class="footer-meta">
+                                                <span><i class="fas fa-calendar-alt"></i> October 10, 2025</span>
+                                                <span><i class="fas fa-user-edit"></i> Emma Williams</span>
+                                            </div>
+                                            <span class="continue-btn">CONTINUE &rarr;</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <!-- Article Card 4 -->
+                            <div class="article-card-wrap">
+                                <a href="#" class="article-card-content">
+                                    <img class="article-card-image" src="https://images.unsplash.com/photo-1653316889237-b5cc78e719c1?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Jewelry Trends">
+                                    <div class="card-details">
+                                        <p class="card-category">Jewelry</p>
+                                        <h3 class="card-title">Statement Rings: Sparkle Trends 2026</h3>
+                                        <p class="card-description">The biggest and brightest trends coming to fine jewelry next season.</p>
+                                        <div class="card-footer">
+                                            <div class="footer-meta">
+                                                <span><i class="fas fa-calendar-alt"></i> September 5, 2025</span>
+                                                <span><i class="fas fa-user-edit"></i> Alex Rodriguez</span>
+                                            </div>
+                                            <span class="continue-btn">CONTINUE &rarr;</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Pagination Dots -->
+                <div id="carousel-pagination" class="carousel-pagination">
+                    <div class="pagination-dot active" onclick="goToSlide(0)"></div>
+                    <div class="pagination-dot" onclick="goToSlide(1)"></div>
+                    <div class="pagination-dot" onclick="goToSlide(2)"></div>
+                </div>
+
+            </section>
+
+        </div>
+    </main>
+
+    <!-- STAY UPDATED SECTION -->
+    <section class="newsletter-section">
+        <div class="newsletter-container">
+            <div class="newsletter-header">
+                <h2 class="newsletter-title">Stay Updated</h2>
+                <p class="newsletter-subtitle">Subscribe to our newsletter and never miss a post. Get the latest fashion insights delivered straight to your inbox.</p>
+            </div>
+            
+            <form id="newsletter-form" class="newsletter-form-blog" onsubmit="handleNewsletterSubscription(event)">
+                <input 
+                    type="email" 
+                    id="newsletter-email" 
+                    placeholder="ENTER YOUR EMAIL..." 
+                    required
+                    class="newsletter-input"
+                >
+                <button type="submit" class="btn-send-now">
+                    SEND NOW
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- footer section -->
+    <footer>
+        <div class="footer-content">
+
+            <!-- column 1: logo and description -->
+            <div class="footer-column footer-logo-col">
+                <div class="footer-logo">
+                    <a href="/Frontend/index.html" class="LOGO5">LU<span class="LOGO6">XE</span><span class="LOGO7">.</span></a>
+                </div>
+                <p class="footer-description">
+                    Curated fashion for the modern wardrobe. Find quality pieces 
+                    that define elegance and sophistication.
+                </p>
+            </div>
+
+            <!-- column 2: shop links -->
+            <div class="footer-column footer-links">
+                <h4>Shop</h4>
+                <a href="/Frontend/pages/products.html">All Products</a>
+                <a href="/Frontend/pages/categories.html">Categories</a>
+            </div>
+
+            <!-- column 3: account links -->
+            <div class="footer-column footer-links">
+                <h4>Account</h4>
+                <a href="/Frontend/pages/orders.html">My Orders</a>
+                <a href="/Frontend/pages/cart.html">Shopping Cart</a>
+            </div>
+
+            <!-- column 4: support links -->
+            <div class="footer-column footer-links">
+                <h4>Support</h4>
+                <a href="#">My Account</a>
+                <a href="/Frontend/pages/contact.html">Contact Us</a>
+                <a href="#">FAQ</a>
+            </div>
+
+            <!-- column 5: connect / social media -->
+            <div class="footer-column footer-links">
+                <h4>Connect</h4>
+                <div class="social-icons">
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- copyrights and credits -->
+        <div class="copyright">
+            &copy; 2025 LUXE. All rights reserved. Made By Adil Hossain
+        </div>
+    </footer>
+
+    <script src="/Frontend/js/script.js"></script>
+    <script src="/Frontend/js/script4.js"></script>
+
+</body>
+</html>

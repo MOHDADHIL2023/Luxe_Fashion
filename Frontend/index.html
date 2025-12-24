@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUXE - Fashion Luxury Brand</title>
+    <link rel="stylesheet" href="/Frontend/css/styles.css">
+    <link rel="stylesheet" href="/Frontend/css/styles1.css">
+    <link rel="icon" type="image/x-icon" href="/Frontend/images/LUXE LOGO.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    
+    <!-- Header/Navigation Section -->
+    <header class="container">
+        <div class="header-content">
+            <!-- Logo Structure for styling -->
+            <a href="/Frontend/index.html" class="LOGO">LU<span class="LOGO1">XE</span><span class="LOGO2">.</span></a>
+
+            <nav class="nav-desktop">
+                <a href="/Frontend/index.html">HOME</a>
+                <a href="/Frontend/pages/products.html">PRODUCTS</a>
+                <a href="/Frontend/pages/categories.html">CATEGORIES</a>
+                <a href="/Frontend/pages/about.html">ABOUT</a>
+                <a href="/Frontend/pages/blog.html">BLOG</a>
+                <a href="/Frontend/pages/contact.html">CONTACT</a>
+            </nav>
+
+            <div class="button-icons">
+                <button class="Search-Button" onclick="handleSearchClick()" aria-label="Search">
+                    <i class="fas fa-search"></i> 
+                </button>
+
+                <button class="Cart-Button" onclick="addToCartBtn()" aria-label="Shopping Cart">
+                    <i class="fas fa-shopping-cart"></i> 
+                </button>
+
+                <button class="Login-Signup-Button" onclick="handleLoginSignup()" aria-label="Login">
+                    <i class="fa fa-user"></i> 
+                </button>
+
+                <button class="Menu-Button" id="menu-button" aria-expanded="false" aria-controls="menu-mobile" aria-label="Menu">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Off-Canvas -->
+    <div id="menu-mobile" class="Menu-Mobile">
+        <div class="menu-content">
+            <button class="Close-Menu-Button" id="close-menu-button" aria-label="Close Menu">
+                <i class="fa fa-times"></i>
+            </button>
+            <a href="/Frontend/index.html">HOME</a>
+            <a href="/Frontend/pages/products.html">PRODUCTS</a>
+            <a href="/Frontend/pages/categories.html">CATEGORIES</a>
+            <a href="/Frontend/pages/about.html">ABOUT</a>
+            <a href="/Frontend/pages/blog.html">BLOG</a>
+            <a href="/Frontend/pages/contact.html">CONTACT</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <main class="Hero-Section">
+        <div class="Hero-Content">
+            <h1 id="tagline" class="text-animation">
+                Define Your
+                <span class="Block-Logo">LU<span class="LOGO3">XE</span><span class="LOGO4">.</span></span>
+            </h1>
+
+            <p id="description" class="text-animation">
+                A curated Premium Quality Fashion picks that offers new products 
+                on selected categories which showcases selected brands, fast delivery 
+                and authentic products with secured packaging.
+            </p>
+
+            <div class="button-animation">
+                <button class="Button1" id="button1">
+                    <a href="/Frontend/pages/products.html">
+                        <i class="fas fa-shopping-bag"></i> Shop Collection
+                    </a>
+                </button>
+                <button class="Button2" id="button2">
+                    <a href="/Frontend/pages/categories.html">
+                        <i class="fas fa-th-large"></i> Browse Categories
+                    </a>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="features-grid">
+            <div class="features-card">
+                <i class="fas fa-truck"></i>
+                <h3>WORLDWIDE DELIVERY</h3>
+                <p>Complimentary shipping on all orders over 240 DHS. Fast, tracked, and reliable service.</p>
+            </div>
+            <div class="features-card">
+                <i class="fas fa-lock"></i>
+                <h3>SECURE PAYMENT</h3>
+                <p>All transactions are securely encrypted. We accept all major payment methods.</p>
+            </div>
+            <div class="features-card">
+                <i class="fas fa-redo-alt"></i>
+                <h3>SIMPLE RETURNS</h3>
+                <p>30-day hassle-free return policy. Get a full refund or exchange with ease.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shop by Category Section -->
+    <section class="category-section">
+        <div class="container-section">
+            <h2 class="section-title">Shop By Category</h2>
+            <p class="section-subtitle">Explore our carefully curated collections designed for every occasion</p>
+
+            <div class="category-grid">
+                <!-- Card 1: Footwear -->
+                <div class="category-card"
+                style="background-image: url('https://images.unsplash.com/photo-1696889645027-9b8e5efc1914?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YWRpZGFzJTIwZm9vdHdlYXJ8ZW58MHx8MHx8fDA%3D');"
+                data-category="footwear">
+                    <div class="card-content">
+                        <h3>Footwear</h3>
+                        <p>Luxury shoes for every occasion</p>
+                        <a href="/Frontend/pages/products.html">Shop Now &rarr;</a>
+                    </div>
+                </div>
+
+                <!-- Card 2: Bags -->
+                <div class="category-card"
+                style="background-image: url('https://images.unsplash.com/photo-1622560480654-d96214fdc887?q=80&w=688&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');"
+                data-category="bags">
+                    <div class="card-content">
+                        <h3>Bags</h3>
+                        <p>Designer handbags and luxury leather goods</p>
+                        <a href="/Frontend/pages/products.html">Shop Now &rarr;</a>
+                    </div>
+                </div>
+
+                <!-- Card 3: Men's Fashion -->
+                <div class="category-card"
+                style="background-image: url('https://images.unsplash.com/photo-1614252360204-4552963c9996?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');"
+                data-category="mens-fashion">
+                    <div class="card-content">
+                        <h3>Men's Fashion</h3>
+                        <p>Sophisticated menswear collection</p>
+                        <a href="/Frontend/pages/products.html">Shop Now &rarr;</a>
+                    </div>
+                </div>
+
+                <!-- Card 4: Women's Fashion -->
+                <div class="category-card"
+                style="background-image: url('https://plus.unsplash.com/premium_photo-1689575249162-beed0ac1f015?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8d29tZW4lMjBmYXNoaW9ufGVufDB8MHwwfHx8MA%3D%3D');"
+                data-category="womens-fashion">
+                    <div class="card-content">
+                        <h3>Women's Fashion</h3>
+                        <p>Elegant pieces for the modern woman</p>
+                        <a href="/Frontend/pages/products.html">Shop Now &rarr;</a>
+                    </div>
+                </div>
+
+                <!-- Card 5: Accessories -->
+                <div class="category-card"
+                style="background-image: url('https://images.unsplash.com/3/www.madebyvadim.com.jpg?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8QWNjZXNzb3JpZXN8ZW58MHwwfDB8fHww');"
+                data-category="accessories">
+                    <div class="card-content">
+                        <h3>Accessories</h3>
+                        <p>Premium accessories to complete your look</p>
+                        <a href="/Frontend/pages/products.html">Shop Now &rarr;</a>
+                    </div>
+                </div>
+
+                <!-- Card 6: Jewelry -->
+                <div class="category-card"
+                style="background-image: url('https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGpld2Vscnl8ZW58MHwwfDB8fHww');"
+                data-category="jewelry">
+                    <div class="card-content">
+                        <h3>Jewelry</h3>
+                        <p>Exquisite jewelry for special moments</p>
+                        <a href="/Frontend/pages/products.html">Shop Now &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Week Deal Section -->
+    <section class="week-deal-section">
+        <div class="deal-content-container">
+            <div class="deal-box" id="deal-box">
+                <h2 class="deal-title">Week Deal</h2>
+                <h3><i class="fas fa-tag"></i> Limited Offers 20% OFF</h3>
+                <p>
+                    Your chance for unique style has arrived. For a limited time, 
+                    enjoy discounts on this week's selected fine fashion, made to 
+                    improve your collection.
+                </p>
+                <a href="/Frontend/pages/products.html" class="deal-button">
+                    <i class="fas fa-bolt"></i> Shop Now &rarr;
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products Section -->
+    <section class="products-section">
+        <div class="container-section">
+            <h2 class="section-title">Featured Products</h2>
+            <p class="section-subtitle">Hand-picked pieces that embody our commitment to luxury and style</p>
+
+            <div class="product-grid" id="featured-products-grid">
+                
+                <!-- product number one coat -->
+                <div class="product-card" style="animation-delay: 0.1s;">
+                    <div class="product-image-area" style="background-image: url('https://images.unsplash.com/photo-1715408153725-186c6c77fb45?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FzaG1lcmUlMjBibGVuZCUyMGNvYXR8ZW58MHwxfDB8fHww');">
+                        <span class="tag new">NEW</span>
+                        <span class="tag sale">25% OFF</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="category-label">
+                            <span>WOMEN'S FASHION</span>
+                            <span class="rating">
+                                4.8 <i class="fas fa-star"></i>
+                            </span>
+                        </div>
+                        <h3>Cashmere Blend Coat</h3>
+                    </div>
+                    <div class="product-details-bar">
+                        <span class="price">445.5 DHS</span>
+                        <span class="status">In Stock</span>
+                        <button class="cart-icon" onclick="addToCartBtn()"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+
+                <!-- product number two silk dress -->
+                <div class="product-card" style="animation-delay: 0.2s;">
+                    <div class="product-image-area" style="background-image: url('https://images.unsplash.com/photo-1700748910972-1978af2203d3?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8U2lsayUyME1pZGklMjBEcmVzc3xlbnwwfDF8MHx8fDA%3D');"></div>
+                    <div class="product-info">
+                        <div class="category-label">
+                            <span>WOMEN'S FASHION</span>
+                            <span class="rating">
+                                4.8 <i class="fas fa-star"></i>
+                            </span>
+                        </div>
+                        <h3>Silk Midi Dress</h3>
+                    </div>
+                    <div class="product-details-bar">
+                        <span class="price">745.5 DHS</span>
+                        <span class="status out-of-stock">Only 8 left</span>
+                        <button class="cart-icon" onclick="addToCartBtn()"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+
+                <!-- product number three leather jacket-->
+                <div class="product-card" style="animation-delay: 0.3s;">
+                    <div class="product-image-area" style="background-image: url('https://images.unsplash.com/photo-1637696468103-99df968d27ef?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzR8fFByZW1pdW0lMjBMZWF0aGVyJTIwSmFja2V0fGVufDB8MXwwfHx8MA%3D%3D');">
+                        <span class="tag new">NEW</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="category-label">
+                            <span>MEN'S FASHION</span>
+                            <span class="rating">
+                                4.8 <i class="fas fa-star"></i>
+                            </span>
+                        </div>
+                        <h3>Premium Leather Jacket</h3>
+                    </div>
+                    <div class="product-details-bar">
+                        <span class="price">500 DHS</span>
+                        <span class="status">In Stock</span>
+                        <button class="cart-icon" onclick="addToCartBtn()"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+
+                <!-- product number four designer handbag -->
+                <div class="product-card" style="animation-delay: 0.4s;">
+                    <div class="product-image-area" style="background-image: url('https://plus.unsplash.com/premium_photo-1679314407939-858a78e9e1ac?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjV8fEhBTkRCQUclMjBtZW58ZW58MHwxfDB8fHww');">
+                    </div>
+                    <div class="product-info">
+                        <div class="category-label">
+                            <span>BAGS</span>
+                            <span class="rating">
+                                4.8 <i class="fas fa-star"></i>
+                            </span>
+                        </div>
+                        <h3>Designer Handbag</h3>
+                    </div>
+                    <div class="product-details-bar">
+                        <span class="price">250 DHS</span>
+                        <span class="status out-of-stock">Only 3 left</span>
+                        <button class="cart-icon" onclick="addToCartBtn()"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+
+                <!-- product number five leather shoes -->
+                <div class="product-card" style="animation-delay: 0.5s;">
+                    <div class="product-image-area" style="background-image: url('https://images.unsplash.com/photo-1628370996561-889d842058bb?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDJ8fEl0YWxpYW4lMjBMZWF0aGVyJTIwU2hvZXN8ZW58MHwxfDB8fHww');">
+                    </div>
+                    <div class="product-info">
+                        <div class="category-label">
+                            <span>FOOTWEAR</span>
+                            <span class="rating">
+                                4.8 <i class="fas fa-star"></i>
+                            </span>
+                        </div>
+                        <h3>Italian Leather Shoes</h3>
+                    </div>
+                    <div class="product-details-bar">
+                        <span class="price">1000 DHS</span>
+                        <span class="status">In Stock</span>
+                        <button class="cart-icon" onclick="addToCartBtn()"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+
+                <!-- product number six for watches -->
+                <div class="product-card" style="animation-delay: 0.6s;">
+                    <div class="product-image-area" style="background-image: url('https://images.unsplash.com/photo-1587925358603-c2eea5305bbc?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+                        <span class="tag sale">10% OFF</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="category-label">
+                            <span>ACCESSORIES</span>
+                            <span class="rating">
+                                4.8 <i class="fas fa-star"></i>
+                            </span>
+                        </div>
+                        <h3>Luxury Watch</h3>
+                    </div>
+                    <div class="product-details-bar">
+                        <span class="price">4000 DHS</span>
+                        <span class="status out-of-stock">Only 3 left</span>
+                        <button class="cart-icon" onclick="addToCartBtn()"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+
+                <!-- product number seven earrings of diamonds-->
+                <div class="product-card" style="animation-delay: 0.7s;">
+                    <div class="product-image-area" style="background-image: url('https://plus.unsplash.com/premium_photo-1681276170092-446cd1b5b32d?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzN8fERpYW1vbmQlMjBFYXJyaW5nc3xlbnwwfDF8MHx8fDA%3D');">
+                    </div>
+                    <div class="product-info">
+                        <div class="category-label">
+                            <span>JEWELRY</span>
+                            <span class="rating">
+                                4.8 <i class="fas fa-star"></i>
+                            </span>
+                        </div>
+                        <h3>Diamond Earrings</h3>
+                    </div>
+                    <div class="product-details-bar">
+                        <span class="price">3500 DHS</span>
+                        <span class="status out-of-stock">Only 7 left</span>
+                        <button class="cart-icon" onclick="addToCartBtn()"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+
+                <!-- products number eight to take sunglasses -->
+                <div class="product-card" style="animation-delay: 0.8s;">
+                    <div class="product-image-area" style="background-image: url('https://images.unsplash.com/photo-1732139637065-1088495050db?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cmF5YmFuJTIwc3VuZ2xhc3Nlc3xlbnwwfDF8MHx8fDA%3D');">
+                    </div>
+                    <div class="product-info">
+                        <div class="category-label">
+                            <span>ACCESSORIES</span>
+                            <span class="rating">
+                                4.8 <i class="fas fa-star"></i>
+                            </span>
+                        </div>
+                        <h3>Designer Sunglasses</h3>
+                    </div>
+                    <div class="product-details-bar">
+                        <span class="price">150 DHS</span>
+                        <span class="status">In Stock</span>
+                        <button class="cart-icon" onclick="addToCartBtn()"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+
+            </div>
+
+            <a href="/Frontend/pages/products.html" class="view-all-button">
+                <i class="fas fa-arrow-right"></i> VIEW ALL PRODUCTS
+            </a>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter-section">
+        <div class="newsletter-content container-section">
+            <div class="newsletter-text">
+                <h2 class="newsletter-title">
+                    Stay In
+                    <span>STYLE</span>
+                </h2>
+                <p class="newsletter-subtitle">
+                    Subscribe to our newsletter for exclusive access to new 
+                    collections, special offers, and style ideas.
+                </p>
+            </div>
+
+            <form class="newsletter-form" id="newsletter-form" onsubmit="handleNewsletterSubscription(event)">
+                <input type="email" id="newsletter-email" placeholder="ENTER YOUR EMAIL..." required>
+                <button type="submit">
+                    <i class="fas fa-paper-plane"></i> SEND NOW
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-content">
+            <!-- Column 1: Logo and Description -->
+            <div class="footer-column footer-logo-col">
+                <div class="footer-logo">
+                    <a href="/Frontend/index.html" class="LOGO5">LU<span class="LOGO6">XE</span><span class="LOGO7">.</span></a>
+                </div>
+                <p class="footer-description">
+                    Curated fashion for the modern wardrobe. Find quality pieces 
+                    that define elegance and sophistication.
+                </p>
+            </div>
+
+            <!-- Column 2: Shop Links -->
+            <div class="footer-column footer-links">
+                <h4>Shop</h4>
+                <a href="/Frontend/pages/products.html">All Products</a>
+                <a href="/Frontend/pages/categories.html">Categories</a>
+            </div>
+
+            <!-- Column 3: Account Links -->
+            <div class="footer-column footer-links">
+                <h4>Account</h4>
+                <a href="/Frontend/pages/orders.html">My Orders</a>
+                <a href="/Frontend/pages/cart.html">Shopping Cart</a>
+            </div>
+
+            <!-- Column 4: Support Links -->
+            <div class="footer-column footer-links">
+                <h4>Support</h4>
+                <a href="#">My Account</a>
+                <a href="/Frontend/pages/contact.html">Contact Us</a>
+                <a href="#">FAQ</a>
+            </div>
+
+            <!-- Column 5: Connect / Social Media -->
+            <div class="footer-column footer-links">
+                <h4>Connect</h4>
+                <div class="social-icons">
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Copyrights and Credits -->
+        <div class="copyright">
+            &copy; 2025 LUXE. All rights reserved. Made By Adil Hossain
+        </div>
+    </footer>
+
+    <script src="/Frontend/js/script.js"></script>
+    <script src="/Frontend/js/config.js"></script> 
+    <script src="/Frontend/js/script1.js"></script>
+</body>
+</html>

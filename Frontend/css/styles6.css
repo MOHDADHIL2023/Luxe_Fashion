@@ -1,0 +1,386 @@
+/* import the custom fonts from google*/
+@import url('https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;500;600;700;800&family=Aboreto&family=Abril+Fatface&family=Abyssinica+SIL&family=Afacad:ital,wght@0,400..700;1,400..700&family=Alice&family=Instrument+Serif:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Italiana&family=Patua+One&family=Stack+Sans+Notch:wght@200..700&display=swap');
+
+/* Global Tag Section */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+/* Global styles */
+body {
+    font-family: "Inter", sans-serif;
+    background-color: #14352b;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    color: black;
+    overflow-x: hidden;
+    line-height: 1.7;
+}
+
+/* Keyframes */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Container for login page */
+.form-container-wrap {
+    max-width: 450px;
+    width: 100%;
+    background-color: #D9D9D9;
+    border-radius: 1rem;
+    padding: 2.5rem;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    animation: fadeInUp 0.8s ease-out forwards 0.2s;
+}
+
+/* Logo center alignment */
+.logo-center {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+/* Create custom logo with green dots features */
+.LOGO, .Block-Logo {
+    font-family: "Italiana", sans-serif;
+    font-size: 2.5rem;
+    letter-spacing: 0.2rem;
+    display: inline-flex;
+    align-items: center;
+    color: black;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.LOGO1, .LOGO3 {
+    font-weight: 400;
+    font-family: "Instrument Serif", serif;
+}
+
+.LOGO2, .LOGO4 {
+    height: 8px;
+    width: 8px;
+    background-color: green;
+    border-radius: 50%;
+    display: inline-block;
+    line-height: 0px;
+    margin-left: 2px;
+    margin-top: 20px;
+    font-size: 0px;
+    transform: translateY(-2px);
+}
+
+/* Form header & toggle styles */
+.auth-main-title {
+    font-family: "Abhaya Libre", sans-serif;
+    font-size: 2.5rem;
+    font-weight: 900;
+    text-align: center;
+    margin-block: 2rem;
+    color: black;
+}
+
+.auth-toggle-group {
+    display: flex;
+    border: 2px solid #00FF55;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    margin-bottom: 2.5rem;
+}
+
+.auth-toggle-button {
+    font-family: "Abril Fatface", serif;
+    flex-grow: 1;
+    padding: 0.75rem 0;
+    font-size: 1rem;
+    font-weight: 700;
+    background-color: white;
+    color: black;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.auth-toggle-button.active {
+    background-color: #14352b;
+    color: white;
+}
+
+.auth-toggle-button:hover:not(.active) {
+    background-color: #f0f0f0;
+}
+
+/* Form styles */
+.auth-form {
+    display: block;
+}
+
+.auth-form.hidden {
+    display: none;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    font-family: "Abril Fatface", serif;
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: black;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.form-group input {
+    width: 100%;
+    font-family: "Abril Fatface", serif;
+    padding: 0.75rem;
+    background-color: white;
+    color: black;
+    border: 2px solid #00FF55;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group input::placeholder {
+    color: #999;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #0d946c;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+}
+
+/* Forgot password link */
+.forgot-password {
+    font-family: "Abhaya Libre", sans-serif;
+    display: block;
+    text-align: right;
+    font-size: 0.987rem;
+    color: #14352b;
+    text-decoration: none;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    font-weight: 800;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+    color: #00FF55;
+}
+
+/* Submit button styles */
+.btn-submit {
+    width: 100%;
+    padding: 1rem;
+    font-family: "Abril Fatface", serif;
+    background-color: #14352b;
+    color: white;
+    font-weight: 700;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-top: 1.5rem;
+    font-size: 1rem;
+}
+
+.btn-submit:hover:not(:disabled) {
+    background-color: #00FF55;
+    color: black;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 255, 85, 0.3);
+}
+
+.btn-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Footer with register social link */
+.auth-footer {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.auth-footer-inline {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.footer-link {
+    color: #14352b;
+    font-weight: 600;
+    font-family: "Abril Fatface", serif;
+    text-decoration: none;
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.footer-link:hover {
+    text-decoration: underline;
+    color: #00FF55;
+}
+
+.divider {
+    display: flex;
+     font-family: "Abhaya Libre", sans-serif;
+    align-items: center;
+    text-align: center;
+    margin: 1.5rem 0;
+    color: black;
+    font-size: 0.987rem;
+    font-weight: 800;
+}
+
+.divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #666;
+}
+
+.divider:not(:empty)::before {
+    margin-right: 0.75rem;
+}
+
+.divider:not(:empty)::after {
+    margin-left: 0.75rem;
+}
+
+/* Google/Apple button styles */
+.btn-google, .btn-apple {
+    display: flex;
+    align-items: center;
+    font-family: "Abril Fatface", serif;
+    justify-content: center;
+    width: 100%;
+    padding: 0.75rem;
+    background-color: white;
+    color: black;
+    font-weight: 600;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    margin-top: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    font-size: 1rem;
+}
+
+.btn-google:hover:not(:disabled) {
+    background-color: #f5f5f5;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-apple {
+    background-color: #0A0A0A;
+    color: white;
+    border-color: #0A0A0A;
+}
+
+.btn-apple:hover:not(:disabled) {
+    background-color: #333;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-google:disabled, .btn-apple:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.google-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 0.75rem;
+}
+
+.btn-apple i {
+    font-size: 1.5rem;
+    margin-right: 0.75rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .form-container-wrap {
+        padding: 2rem 1.5rem;
+    }
+    
+    .auth-main-title {
+        font-size: 2rem;
+    }
+    
+    .LOGO {
+        font-size: 2rem;
+    }
+}
+
+/* =========================================
+   RESPONSIVE BREAKPOINTS
+   ========================================= */
+
+/* Mobile Landscape & Up */
+@media (min-width: 480px) {
+    .form-container-wrap {
+        padding: 2.5rem;
+    }
+
+    .auth-main-title {
+        font-size: 2.5rem;
+    }
+}
+
+/* =========================================
+   RESPONSIVE BREAKPOINTS
+   ========================================= */
+
+/* Mobile Landscape & Tablets (min-width: 480px) */
+@media (min-width: 480px) {
+    .form-container-wrap {
+        padding: 2.5rem;
+    }
+    
+    .auth-main-title {
+        font-size: 2.5rem;
+    }
+    
+    /* Make Google Button width match form on larger screens */
+    #google-btn-container iframe {
+        width: 100% !important; 
+        /* Note: Google controls iframe width via 'data-width' attribute in HTML */
+    }
+}
+
+/* Update this section in styles6.css */
+#google-btn-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+    min-height: 44px; /* Prevents layout shift */
+}
+
+/* Ensure the Apple button matches the spacing */
+.btn-apple {
+    width: 100%;
+    /* ... existing styles ... */
+}
