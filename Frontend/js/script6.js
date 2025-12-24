@@ -81,12 +81,12 @@ window.handleAuth = async function(event, type) {
         const confirmPassword = document.getElementById('signup-confirm-password').value;
         
         if (password !== confirmPassword) {
-            displayMessageBox("❌ Passwords do not match!");
+            displayMessageBox(" Passwords do not match!");
             return;
         }
         
         if (password.length < 6) {
-            displayMessageBox("❌ Password must be at least 6 characters!");
+            displayMessageBox(" Password must be at least 6 characters!");
             return;
         }
     }
@@ -129,15 +129,15 @@ window.handleAuth = async function(event, type) {
             // 2. REDIRECT LOGIC
             if (data.user.role === 'admin') {
                 // Admin Login
-                displayMessageBox(`✅ Welcome Admin ${firstName}! Going to Dashboard...`);
+                displayMessageBox(` Welcome Admin ${firstName}! Going to Dashboard...`);
                 setTimeout(() => {
                     window.location.href = '/Frontend/pages/admin.html';
                 }, 1500);
             } else {
                 // Customer Login OR New Signup
                 let msg = type === 'signup' 
-                    ? `✅ Account created! Welcome, ${firstName}!` 
-                    : `✅ Welcome back, ${firstName}!`;
+                    ? ` Account created! Welcome, ${firstName}!` 
+                    : ` Welcome back, ${firstName}!`;
                     
                 displayMessageBox(`${msg} Redirecting to store...`);
                 
@@ -148,12 +148,12 @@ window.handleAuth = async function(event, type) {
 
         } else {
             // Show error message from backend
-            displayMessageBox(`❌ ${data.error || "Authentication failed."}`);
+            displayMessageBox(` ${data.error || "Authentication failed."}`);
         }
 
     } catch (error) {
         console.error('Auth Error:', error);
-        displayMessageBox("❌ Server error. Check backend connection.");
+        displayMessageBox(" Server error. Check backend connection.");
     } finally {
         // Re-enable button
         submitButton.disabled = false;

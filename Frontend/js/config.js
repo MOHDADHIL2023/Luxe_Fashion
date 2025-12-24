@@ -6,7 +6,7 @@
 const API_URL = 'http://localhost:5001/Frontend/pages/products.html';
 
 // Google Client ID
-const GOOGLE_CLIENT_ID = '46629384050-lmcb75sc7a8g69sc1s0hbt1rh3ahnelf.apps.googleusercontent.com';
+const GOOGLE_CLIENT_ID = '46629384050-r38k8ipaocu9d4espp7g640hllivijg7.apps.googleusercontent.com';
 
 // Export for use in other scripts
 if (typeof module !== 'undefined' && module.exports) {
