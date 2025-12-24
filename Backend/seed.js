@@ -258,7 +258,7 @@ async function seedDatabase() {
         console.log(` Total Users: ${userCount}`);
         console.log('========================================');
         console.log('');
-        console.log('🎉 Database seeding completed successfully!');
+        console.log(' Database seeding completed successfully!');
         console.log('');
         console.log(' Next steps:');
         console.log('   1. Start backend: npm run dev');
