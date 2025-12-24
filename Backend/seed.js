@@ -198,58 +198,101 @@ const createAdminUser = async () => {
 
 async function seedDatabase() {
     try {
-        console.log(' Starting database seeding...');
+        console.log('========================================');
+        console.log(' LUXE FASHION DATABASE SEEDER');
+        console.log('========================================');
         console.log('');
 
+        // Connect to MongoDB
+        console.log(' Connecting to MongoDB...');
+        console.log(`   URI: ${MONGO_URI.split('@')[1] || 'Local MongoDB'}`);
+        
         await mongoose.connect(MONGO_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
-        console.log(' Connected to MongoDB');
-
-        console.log('  Clearing existing data...');
-        await Product.deleteMany({});
-        await User.deleteMany({});
-        console.log(' Existing data cleared');
+        
+        console.log(' Connected to MongoDB successfully');
         console.log('');
 
+        // Clear existing data
+        console.log('  Clearing existing data...');
+        const deletedProducts = await Product.deleteMany({});
+        const deletedUsers = await User.deleteMany({});
+        console.log(`   Deleted ${deletedProducts.deletedCount} products`);
+        console.log(`   Deleted ${deletedUsers.deletedCount} users`);
+        console.log('');
+
+        // Seed products
         console.log(' Seeding products...');
         const insertedProducts = await Product.insertMany(sampleProducts);
         console.log(` Successfully added ${insertedProducts.length} products`);
+        
+        // List first 3 products
+        console.log('');
+        console.log(' Sample products added:');
+        insertedProducts.slice(0, 3).forEach((p, i) => {
+            console.log(`   ${i + 1}. ${p.name} - ${p.price} DHS (${p.category})`);
+        });
+        console.log(`   ... and ${insertedProducts.length - 3} more products`);
         console.log('');
 
+        // Create admin user
         console.log(' Creating admin user...');
         const adminUser = await createAdminUser();
-        await User.create(adminUser);
-        console.log('   Admin user created');
-        console.log('   Email: admin@luxe.com');
-        console.log('   Password: admin123');
+        const createdAdmin = await User.create(adminUser);
+        console.log(' Admin user created successfully');
+        console.log(`   Email: ${createdAdmin.email}`);
+        console.log(`   Password: admin123`);
+        console.log(`   Role: ${createdAdmin.role}`);
         console.log('');
 
+        // Final count
         const productCount = await Product.countDocuments();
         const userCount = await User.countDocuments();
 
-        console.log(' ================================');
+        console.log('========================================');
         console.log(' SEEDING SUMMARY');
-        console.log(' ================================');
+        console.log('========================================');
         console.log(` Total Products: ${productCount}`);
         console.log(` Total Users: ${userCount}`);
-        console.log(' ================================');
+        console.log('========================================');
         console.log('');
-        console.log(' Database seeding completed successfully!');
-        console.log(' You can now start your backend server');
+        console.log('🎉 Database seeding completed successfully!');
+        console.log('');
+        console.log(' Next steps:');
+        console.log('   1. Start backend: npm run dev');
+        console.log('   2. Test products: http://localhost:5001/api/products');
+        console.log('   3. Login as admin: admin@luxe.com / admin123');
         console.log('');
 
+        // Close connection
+        await mongoose.connection.close();
+        console.log('🔌 Database connection closed');
         process.exit(0);
 
     } catch (error) {
         console.error('');
-        console.error(' ================================');
+        console.error('========================================');
         console.error(' ERROR DURING SEEDING');
-        console.error(' ================================');
-        console.error(' Error:', error.message);
-        console.error(' ================================');
+        console.error('========================================');
+        console.error('Error:', error.message);
         console.error('');
+        
+        if (error.message.includes('ECONNREFUSED')) {
+            console.error(' Possible cause: MongoDB is not running');
+            console.error('   Solutions:');
+            console.error('   - Start MongoDB locally');
+            console.error('   - OR use MongoDB Atlas (cloud)');
+        } else if (error.message.includes('authentication failed')) {
+            console.error(' Possible cause: Wrong MongoDB credentials');
+            console.error('   Solution: Check MONGO_URI in .env file');
+        }
+        
+        console.error('========================================');
+        console.error('');
+        
+        await mongoose.connection.close();
         process.exit(1);
     }
 }

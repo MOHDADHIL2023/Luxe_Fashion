@@ -1,13 +1,14 @@
-const CONFIG = {
-    // 1. UNCOMMENT THIS LINE FOR LOCAL DEVELOPMENT (When running on your computer)
-    // API_URL: 'http://localhost:5001',
+// =============================================
+// API CONFIGURATION
+// =============================================
 
-    // 2. UNCOMMENT THIS LINE FOR LIVE PUBLISHING (After you deploy your backend)
-    // Replace the URL below with your actual deployed backend URL (e.g., from Render/Railway)
-    API_URL: 'https://luxe-backend.onrender.com' // Use YOUR specific URL from Phase A
-};
+// Backend API Base URL
+const API_URL = 'http://localhost:5001/Frontend/pages/products.html';
 
-// Remove trailing slash if present to prevent double slashes later
-if (CONFIG.API_URL.endsWith('/')) {
-    CONFIG.API_URL = CONFIG.API_URL.slice(0, -1);
+// Google Client ID
+const GOOGLE_CLIENT_ID = '46629384050-lmcb75sc7a8g69sc1s0hbt1rh3ahnelf.apps.googleusercontent.com';
+
+// Export for use in other scripts
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { API_URL, GOOGLE_CLIENT_ID };
 }

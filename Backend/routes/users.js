@@ -5,7 +5,9 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const { auth, adminOnly } = require('../middleware/auth');
 const { OAuth2Client } = require('google-auth-library');
-const client = new OAuth2Client("46629384050-lmcb75sc7a8g69sc1s0hbt1rh3ahnelf.apps.googleusercontent.com");
+
+// Initialize Google OAuth Client
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 // =============================================
 // HELPER FUNCTION: Generate JWT Token
@@ -21,6 +23,83 @@ const generateToken = (user) => {
         { expiresIn: '7d' }
     );
 };
+
+// =============================================
+// GOOGLE AUTH ROUTE (PUBLIC)
+// =============================================
+router.post('/auth/google', async (req, res) => {
+    try {
+        const { token } = req.body;
+        
+        console.log(' Google Auth attempt');
+
+        if (!token) {
+            return res.status(400).json({ error: 'Token is required' });
+        }
+        
+        // 1. Verify Google Token
+        const ticket = await client.verifyIdToken({
+            idToken: token,
+            audience: process.env.GOOGLE_CLIENT_ID
+        });
+        
+        const payload = ticket.getPayload();
+        const { name, email, picture, sub: googleId } = payload;
+
+        console.log(' Google token verified for:', email);
+
+        // 2. Check if user exists in DB
+        let user = await User.findOne({ email: email.toLowerCase() });
+
+        if (user) {
+            console.log(' Existing user found:', email);
+            // User exists - Update googleId if missing
+            if (!user.googleId) {
+                user.googleId = googleId;
+            }
+            user.status = 'active';
+            await user.save();
+        } else {
+            console.log(' Creating new user:', email);
+            // Create new user
+            user = new User({
+                name,
+                email: email.toLowerCase(),
+                googleId,
+                // Generate random password for Google users (they won't use it)
+                password: await bcrypt.hash(Math.random().toString(36).slice(-8), 10),
+                role: 'customer',
+                status: 'active'
+            });
+            await user.save();
+        }
+
+        // 3. Generate JWT Token (Same as normal login)
+        const jwtToken = generateToken(user);
+
+        console.log(' Google login successful for:', email);
+
+        res.json({
+            success: true,
+            message: 'Google login successful',
+            token: jwtToken,
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+                status: user.status
+            }
+        });
+
+    } catch (error) {
+        console.error(' Google Auth Error:', error);
+        res.status(400).json({ 
+            error: 'Invalid Google Token',
+            details: error.message 
+        });
+    }
+});
 
 // =============================================
 // SIGNUP ROUTE (Public)
@@ -67,7 +146,7 @@ router.post('/signup', async (req, res) => {
         // Generate JWT token
         const token = generateToken(newUser);
 
-        console.log('New user created:', email);
+        console.log(' New user created:', email);
 
         res.status(201).json({
             success: true,
@@ -98,7 +177,7 @@ router.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        console.log('Login attempt for:', email);
+        console.log(' Login attempt for:', email);
 
         // Validation
         if (!email || !password) {
@@ -113,17 +192,17 @@ router.post('/login', async (req, res) => {
         });
 
         if (!user) {
-            console.log('User not found:', email);
+            console.log(' User not found:', email);
             return res.status(401).json({ 
                 error: 'Invalid email or password' 
             });
         }
 
-        console.log('👤 User found:', user.email);
+        console.log(' User found:', user.email);
 
         // Check if password field exists
         if (!user.password) {
-            console.log('No password set for user:', email);
+            console.log(' No password set for user:', email);
             return res.status(401).json({ 
                 error: 'Invalid email or password' 
             });
@@ -133,7 +212,7 @@ router.post('/login', async (req, res) => {
         const isPasswordValid = await bcrypt.compare(password, user.password);
 
         if (!isPasswordValid) {
-            console.log('Invalid password for:', email);
+            console.log(' Invalid password for:', email);
             return res.status(401).json({ 
                 error: 'Invalid email or password' 
             });
@@ -146,7 +225,7 @@ router.post('/login', async (req, res) => {
         // Generate JWT token
         const token = generateToken(user);
 
-        console.log('✅ User logged in successfully:', email);
+        console.log(' User logged in successfully:', email);
 
         res.json({
             success: true,
@@ -197,7 +276,6 @@ router.get('/me', auth, async (req, res) => {
 
 // =============================================
 // LOGOUT ROUTE (Protected)
-// Optional: You can add token blacklisting here
 // =============================================
 router.post('/logout', auth, async (req, res) => {
     try {
@@ -205,7 +283,7 @@ router.post('/logout', auth, async (req, res) => {
         req.user.status = 'inactive';
         await req.user.save();
 
-        console.log('👋 User logged out:', req.user.email);
+        console.log(' User logged out:', req.user.email);
 
         res.json({
             success: true,
@@ -301,7 +379,7 @@ router.put('/:id', auth, adminOnly, async (req, res) => {
             return res.status(404).json({ error: 'User not found' });
         }
 
-        console.log('✏️ User updated:', updatedUser.email);
+        console.log(' User updated:', updatedUser.email);
 
         res.json({
             success: true,
@@ -385,7 +463,7 @@ router.post('/me/change-password', auth, async (req, res) => {
         user.password = await bcrypt.hash(newPassword, 10);
         await user.save();
 
-        console.log('🔒 Password changed for:', user.email);
+        console.log(' Password changed for:', user.email);
 
         res.json({
             success: true,
@@ -419,7 +497,7 @@ router.delete('/:id', auth, adminOnly, async (req, res) => {
             return res.status(404).json({ error: 'User not found' });
         }
 
-        console.log('User deleted:', deletedUser.email);
+        console.log(' User deleted:', deletedUser.email);
 
         res.json({
             success: true,
@@ -436,65 +514,3 @@ router.delete('/:id', auth, adminOnly, async (req, res) => {
 });
 
 module.exports = router;
-
-// =============================================
-// GOOGLE AUTH ROUTE
-// =============================================
-router.post('/auth/google', async (req, res) => {
-    try {
-        const { token } = req.body;
-        
-        // 1. Verify Google Token
-        const ticket = await client.verifyIdToken({
-            idToken: token,
-            audience: "46629384050-lmcb75sc7a8g69sc1s0hbt1rh3ahnelf.apps.googleusercontent.com"
-        });
-        
-        const { name, email, picture, sub: googleId } = ticket.getPayload();
-
-        // 2. Check if user exists in DB
-        let user = await User.findOne({ email });
-
-        if (user) {
-            // User exists - Update googleId if missing
-            if (!user.googleId) {
-                user.googleId = googleId;
-                await user.save();
-            }
-        } else {
-            // Create new user
-            user = new User({
-                name,
-                email,
-                googleId,
-                password: await bcrypt.hash(Math.random().toString(36).slice(-8), 10), // Random password
-                role: 'customer',
-                status: 'active'
-            });
-            await user.save();
-        }
-
-        // 3. Generate JWT Token (Same as normal login)
-        const jwtToken = jwt.sign(
-            { id: user._id, email: user.email, role: user.role },
-            process.env.JWT_SECRET,
-            { expiresIn: '7d' }
-        );
-
-        res.json({
-            success: true,
-            token: jwtToken,
-            user: {
-                id: user._id,
-                name: user.name,
-                email: user.email,
-                role: user.role,
-                status: user.status
-            }
-        });
-
-    } catch (error) {
-        console.error("Google Auth Error:", error);
-        res.status(400).json({ error: "Invalid Google Token" });
-    }
-});
