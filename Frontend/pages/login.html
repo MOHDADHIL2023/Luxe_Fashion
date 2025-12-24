@@ -9,6 +9,9 @@
     <link rel="icon" type="image/x-icon" href="/Frontend/images/LUXE LOGO.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <!-- Google Sign-In Library -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
     
@@ -70,32 +73,25 @@
             </div>
         </form>
 
+        <!-- Social Login Section -->
         <div class="auth-footer">
-    <div class="divider">OR Register With</div>
+            <div class="divider">OR Continue With</div>
 
-    <!-- 1. HIDDEN CONFIGURATION FOR GOOGLE -->
-    <div id="g_id_onload"
-         data-client_id="46629384050-lmcb75sc7a8g69sc1s0hbt1rh3ahnelf.apps.googleusercontent.com"
-         data-context="signin"
-         data-ux_mode="popup"
-         data-callback="handleGoogleResponse"
-         data-auto_prompt="false">
+            <!-- Google Button Container -->
+            <div id="google-btn-container" style="display: flex; justify-content: center; margin-bottom: 1rem;"></div>
+
+            <!-- Apple Button (Optional) -->
+            <button class="btn-apple" onclick="signInWithApple()">
+                <i class="fab fa-apple"></i>
+                Apple
+            </button>
+        </div>
     </div>
 
-    <!-- 2. CONTAINER FOR THE OFFICIAL GOOGLE BUTTON -->
-    <!-- The JavaScript will inject the button here automatically -->
-    <div id="google-btn-container"></div>
-
-    <!-- 3. APPLE BUTTON -->
-    <button class="btn-apple" onclick="signInWithApple()">
-        <i class="fab fa-apple"></i>
-        Apple
-    </button>
-</div>
-    </div>
-
+    <!-- Load Config First -->
+    <script src="/Frontend/js/config.js"></script>
+    <!-- Then Load Main Script -->
     <script src="/Frontend/js/script6.js"></script>
-    <script src="/Frontend/js/config.js"></script> 
 
 </body>
 </html>
