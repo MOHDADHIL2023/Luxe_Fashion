@@ -1,23 +1,25 @@
-// ========================================
-// ADMIN PANEL DATA MANAGEMENT
-// ========================================
+// Frontend/js/script-admin.js
 
+const BASE_URL = typeof API_URL !== 'undefined' ? API_URL : 'http://localhost:5001';
+
+// Data Store
 let users = [];
 let orders = [];
 let products = [];
 
-const API_URL = 'http://localhost:5001';
+document.addEventListener('DOMContentLoaded', () => {
+    if (checkAuth()) {
+        initTabs();
+        initSearch();
+        fetchAllData();
+    }
+});
 
-// ========================================
-// 1. AUTHENTICATION & HEADERS HELPER
-// ========================================
-
-// Check if admin is logged in immediately
 function checkAuth() {
-    const token = localStorage.getItem('luxe_token');
     const user = JSON.parse(localStorage.getItem('luxe_current_user'));
+    const token = localStorage.getItem('luxe_token');
 
-    if (!token || !user || user.role !== 'admin') {
+    if (!user || !token || user.role !== 'admin') {
         alert("Access Denied: Admins only.");
         window.location.href = '/Frontend/pages/login.html';
         return false;
@@ -25,7 +27,6 @@ function checkAuth() {
     return true;
 }
 
-// Helper to get headers with Token
 function getAuthHeaders() {
     const token = localStorage.getItem('luxe_token');
     return {
@@ -34,425 +35,277 @@ function getAuthHeaders() {
     };
 }
 
-// ========================================
-// 2. DATA FETCHING (Async Functions)
-// ========================================
-
 async function fetchAllData() {
-    if (!checkAuth()) return;
-
     try {
         const headers = getAuthHeaders();
 
         // 1. Fetch Users
-        const usersRes = await fetch(`${API_URL}/users`, { headers });
+        const usersRes = await fetch(`${BASE_URL}/users`, { headers });
         if (usersRes.ok) {
             const data = await usersRes.json();
-            users = data.users || data; // Handle if response is { users: [...] } or just [...]
-            console.log(` Loaded ${users.length} users`);
+            users = data.users || data; 
             renderUsers();
-        } else {
-            console.error('Failed to load users');
+            document.getElementById('total-users').textContent = users.length;
         }
 
         // 2. Fetch Products
-        const productsRes = await fetch(`${API_URL}/api/products`); // Public route, no token strictly needed but good practice
+        const productsRes = await fetch(`${BASE_URL}/api/products`);
         if (productsRes.ok) {
             products = await productsRes.json();
-            console.log(` Loaded ${products.length} products`);
             renderProducts();
+            document.getElementById('total-products').textContent = products.length;
         }
 
-        // 3. Fetch Orders (Protected Admin Route)
-        const ordersRes = await fetch(`${API_URL}/api/orders`, { headers });
+        // 3. Fetch Orders
+        const ordersRes = await fetch(`${BASE_URL}/api/orders`, { headers });
         if (ordersRes.ok) {
             orders = await ordersRes.json();
-            console.log(`✅ Loaded ${orders.length} orders`);
             renderOrders();
-        } else {
-            console.error('Failed to load orders');
+            document.getElementById('total-orders').textContent = orders.length;
+            
+            const revenue = orders.reduce((sum, order) => sum + (order.totalAmount || 0), 0);
+            document.getElementById('total-revenue').textContent = revenue.toFixed(2) + ' DHS';
         }
-
-        // 4. Update Statistics
-        updateStatistics();
 
     } catch (error) {
         console.error("Error loading admin data:", error);
-        showNotification("Error connecting to server. Is backend running?", "error");
-    }
-}
-
-async function updateStatistics() {
-    try {
-        const headers = getAuthHeaders();
-        const res = await fetch(`${API_URL}/api/stats`, { headers });
-        
-        if (res.ok) {
-            const data = await res.json();
-            document.getElementById('total-users').textContent = data.userCount;
-            document.getElementById('total-orders').textContent = data.orderCount;
-            document.getElementById('total-products').textContent = data.productCount;
-            document.getElementById('total-revenue').textContent = `${data.revenue} DHS`;
-        }
-    } catch (error) {
-        console.log("Stats error:", error);
     }
 }
 
 // ========================================
-// 3. ACTION FUNCTIONS (Delete, Save)
+// RENDERERS
 // ========================================
 
-// Delete User
-async function deleteUser(id) {
-    if (!confirm('Are you sure you want to delete this user?')) return;
-    
-    try {
-        const headers = getAuthHeaders();
-        const response = await fetch(`${API_URL}/users/${id}`, { 
-            method: 'DELETE',
-            headers: headers
-        });
-        
-        if (response.ok) {
-            showNotification('User deleted successfully!', 'success');
-            fetchAllData(); // Refresh data
-        } else {
-            const err = await response.json();
-            showNotification(err.error || 'Failed to delete user', 'error');
-        }
-    } catch (error) {
-        console.error('Delete error:', error);
-        showNotification('Error deleting user', 'error');
-    }
-}
-
-// Delete Product
-async function deleteProduct(id) {
-    if (!confirm('Are you sure you want to delete this product?')) return;
-    
-    try {
-        const headers = getAuthHeaders();
-        const response = await fetch(`${API_URL}/api/products/${id}`, { 
-            method: 'DELETE',
-            headers: headers
-        });
-        
-        if (response.ok) {
-            showNotification('Product deleted successfully!', 'success');
-            fetchAllData();
-        } else {
-            showNotification('Error deleting product', 'error');
-        }
-    } catch (error) {
-        console.error('Delete error:', error);
-        showNotification('Error deleting product', 'error');
-    }
-}
-
-// Save Product (Create)
-async function saveProduct(e) {
-    e.preventDefault();
-    
-    const productData = {
-        name: document.getElementById('product-name').value,
-        category: document.getElementById('product-category').value,
-        price: parseFloat(document.getElementById('product-price').value),
-        stock: document.getElementById('product-stock').value === 'true',
-        rating: parseFloat(document.getElementById('product-rating').value),
-        imageUrl: document.getElementById('product-image').value || 'https://placehold.co/400x400/F0F0F0/0A0A0A?text=No+Image',
-        isNew: document.getElementById('product-new').checked,
-        isSale: document.getElementById('product-sale').checked
-    };
-
-    try {
-        const headers = getAuthHeaders();
-        const res = await fetch(`${API_URL}/api/products`, {
-            method: 'POST',
-            headers: headers,
-            body: JSON.stringify(productData)
-        });
-
-        if (res.ok) {
-            showNotification('Product added successfully!', 'success');
-            closeProductModal();
-            fetchAllData();
-        } else {
-            const err = await res.json();
-            showNotification(err.message || 'Error saving product', 'error');
-        }
-    } catch (error) {
-        console.error(error);
-        showNotification('Server Error', 'error');
-    }
-}
-
-// ========================================
-// 4. RENDERING FUNCTIONS (UI Only)
-// ========================================
-
-function renderUsers(searchTerm = '') {
+function renderUsers(term = '') {
     const tbody = document.getElementById('users-tbody');
-    if(!tbody) return;
+    if (!tbody) return;
     tbody.innerHTML = '';
 
-    const filteredUsers = users.filter(user =>
-        (user.name && user.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        (user.email && user.email.toLowerCase().includes(searchTerm.toLowerCase()))
+    const filtered = users.filter(u => 
+        u.name.toLowerCase().includes(term.toLowerCase()) || 
+        u.email.toLowerCase().includes(term.toLowerCase())
     );
 
-    filteredUsers.forEach(user => {
-        const statusClass = user.status === 'active' ? 'status-active' : 'status-inactive';
-        const dateStr = user.joined ? new Date(user.joined).toLocaleDateString() : 'N/A';
-
-        const row = document.createElement('tr');
-        row.innerHTML = `
+    filtered.forEach(user => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
             <td>${user._id.substring(0, 6)}...</td>
             <td>${user.name}</td>
             <td>${user.email}</td>
             <td><span class="role-badge">${user.role}</span></td>
-            <td><span class="status-badge ${statusClass}">${user.status}</span></td>
-            <td>${dateStr}</td>
+            <td>${user.status}</td>
             <td>
-                <div class="action-btns">
-                    <button class="btn-delete" onclick="deleteUser('${user._id}')">
-                        <i class="fas fa-trash"></i> Delete
-                    </button>
-                </div>
+                <button class="btn-delete" onclick="deleteUser('${user._id}')">Delete</button>
             </td>
         `;
-        tbody.appendChild(row);
+        tbody.appendChild(tr);
     });
 }
 
-function renderOrders(searchTerm = '') {
+function renderOrders(term = '') {
     const tbody = document.getElementById('orders-tbody');
-    if(!tbody) return;
+    if (!tbody) return;
     tbody.innerHTML = '';
 
-    const filteredOrders = orders.filter(order =>
-        (order._id && order._id.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        (order.customerName && order.customerName.toLowerCase().includes(searchTerm.toLowerCase()))
+    const filtered = orders.filter(o => 
+        (o._id && o._id.includes(term)) || 
+        (o.customerName && o.customerName.toLowerCase().includes(term.toLowerCase()))
     );
 
-    filteredOrders.forEach(order => {
-        const itemsList = order.items && order.items.length > 0
-            ? order.items.map(i => i.name).join(', ')
-            : 'No items';
+    filtered.forEach(order => {
+        const total = order.totalAmount || 0;
+        const tr = document.createElement('tr');
         
-        // Handle totalAmount vs total naming consistency
-        const total = order.totalAmount || order.total || 0;
-
-        const row = document.createElement('tr');
-        row.innerHTML = `
+        // Changed Button to call viewOrderDetails
+        tr.innerHTML = `
             <td>${order._id.substring(0, 8)}...</td>
             <td>${order.customerName}</td>
-            <td>${new Date(order.date).toLocaleDateString()}</td>
-            <td><span class="status-badge status-${(order.status || 'pending').toLowerCase()}">${order.status || 'Pending'}</span></td>
-            <td>${total.toFixed(2)} DHS</td>
-            <td>${itemsList}</td>
+            <td>${new Date(order.createdAt || order.date).toLocaleDateString()}</td>
+            <td>${order.status}</td>
+            <td>${total.toFixed(2)}</td>
+            <td>${order.items.length} Items</td>
             <td>
-                <div class="action-btns">
-                    <button class="btn-view" onclick="viewOrderDetails('${order._id}')">
-                        <i class="fas fa-eye"></i> View
-                    </button>
-                </div>
+                <button class="btn-view" onclick="viewOrderDetails('${order._id}')">View</button>
             </td>
         `;
-        tbody.appendChild(row);
+        tbody.appendChild(tr);
     });
 }
 
-function renderProducts(searchTerm = '') {
+function renderProducts(term = '') {
     const tbody = document.getElementById('products-tbody');
-    if(!tbody) return;
+    if (!tbody) return;
     tbody.innerHTML = '';
 
-    const filteredProducts = products.filter(product =>
-        (product.name && product.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        (product.category && product.category.toLowerCase().includes(searchTerm.toLowerCase()))
-    );
+    const filtered = products.filter(p => p.name.toLowerCase().includes(term.toLowerCase()));
 
-    filteredProducts.forEach(product => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
+    filtered.forEach(product => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
             <td>${product._id.substring(0, 6)}...</td>
-            <td><img src="${product.imageUrl}" alt="${product.name}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;" onerror="this.src='https://placehold.co/50x50/F0F0F0/0A0A0A?text=No+Image'"></td>
+            <td><img src="${product.imageUrl}" style="width:40px;height:40px;object-fit:cover"></td>
             <td>${product.name}</td>
-            <td>${(product.category || '').replace('-', ' ')}</td>
-            <td>${product.price.toFixed(2)} DHS</td>
-            <td><span class="stock-badge stock-${product.stock ? 'in' : 'out'}">${product.stock ? 'In Stock' : 'Out of Stock'}</span></td>
-            <td>${product.rating} ⭐</td>
+            <td>${product.category}</td>
+            <td>${product.price}</td>
+            <td>${product.stock ? 'In Stock' : 'Out'}</td>
             <td>
-                <div class="action-btns">
-                    <button class="btn-delete" onclick="deleteProduct('${product._id}')">
-                        <i class="fas fa-trash"></i> Delete
-                    </button>
-                </div>
+                <button class="btn-delete" onclick="deleteProduct('${product._id}')">Delete</button>
             </td>
         `;
-        tbody.appendChild(row);
+        tbody.appendChild(tr);
     });
 }
 
 // ========================================
-// 5. UI INTERACTION (Modals, Tabs, Search)
+// ORDER DETAILS MODAL LOGIC
 // ========================================
 
-window.openUserModal = function() {
-    alert("To add users, use the Signup page.");
-}
-
-window.openOrderModal = function() {
-    alert("Orders are created by customers via checkout.");
-}
-
-window.viewOrderDetails = function(orderId) {
-    const order = orders.find(o => o._id === orderId);
-    if (order) {
-        const total = order.totalAmount || order.total || 0;
-        const details = `
-Order ID: ${order._id}
-Customer: ${order.customerName}
-Email: ${order.customerEmail || 'N/A'}
-Total: ${total} DHS
-Status: ${order.status}
-Date: ${new Date(order.date).toLocaleString()}
-
-Items:
-${order.items.map(item => `- ${item.name} (Qty: ${item.qty})`).join('\n')}
+// 1. Create Modal HTML dynamically if it doesn't exist
+function ensureOrderModalExists() {
+    if (!document.getElementById('order-details-modal')) {
+        const modalHTML = `
+            <div id="order-details-modal" class="modal">
+                <div class="modal-content" style="max-width: 600px;">
+                    <div class="modal-header">
+                        <h2 id="order-modal-title">Order Details</h2>
+                        <button class="close-btn" onclick="closeOrderDetailsModal()">&times;</button>
+                    </div>
+                    <div id="order-details-body" style="padding: 10px 0;">
+                        <!-- Content injected here -->
+                    </div>
+                    <div class="modal-actions">
+                        <button class="btn-secondary" onclick="closeOrderDetailsModal()">Close</button>
+                    </div>
+                </div>
+            </div>
         `;
-        alert(details);
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
     }
 }
 
-window.openProductModal = function() {
-    const modal = document.getElementById('product-modal');
-    const title = document.getElementById('product-modal-title');
-    const form = document.getElementById('product-form');
+// 2. Open Modal with Data
+window.viewOrderDetails = function(orderId) {
+    const order = orders.find(o => o._id === orderId);
+    if (!order) return;
 
-    title.textContent = 'Add New Product';
-    form.reset();
-    document.getElementById('product-id').value = '';
-    modal.classList.add('active');
-}
+    ensureOrderModalExists();
 
-window.closeProductModal = function() {
+    const dateStr = new Date(order.createdAt || order.date).toLocaleString();
+    const address = order.shippingAddress 
+        ? `${order.shippingAddress.street || ''}, ${order.shippingAddress.city || ''}, ${order.shippingAddress.country || ''}`
+        : 'N/A';
+
+    // Build Items List HTML
+    let itemsHtml = order.items.map(item => `
+        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #eee; padding: 8px 0;">
+            <div>
+                <strong>${item.name}</strong> <br>
+                <span style="color: #666; font-size: 0.9em;">Qty: ${item.qty}</span>
+            </div>
+            <div>
+                ${(item.price * item.qty).toFixed(2)} DHS
+            </div>
+        </div>
+    `).join('');
+
+    const contentHtml = `
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+            <div>
+                <h4 style="margin: 0 0 5px; color: #555;">Customer Info</h4>
+                <p style="margin: 0; font-weight: bold;">${order.customerName}</p>
+                <p style="margin: 0; font-size: 0.9em; color: #666;">${order.customerEmail}</p>
+            </div>
+            <div>
+                <h4 style="margin: 0 0 5px; color: #555;">Order Info</h4>
+                <p style="margin: 0; font-size: 0.9em;">ID: #${order._id.substring(0, 8)}</p>
+                <p style="margin: 0; font-size: 0.9em;">Date: ${dateStr}</p>
+                <p style="margin: 5px 0 0;"><span class="status-badge status-${(order.status || 'pending').toLowerCase()}">${order.status}</span></p>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <h4 style="margin: 0 0 5px; color: #555;">Shipping Address</h4>
+            <p style="margin: 0; background: #f9fafb; padding: 8px; border-radius: 4px;">${address}</p>
+        </div>
+
+        <div>
+            <h4 style="margin: 0 0 10px; color: #555;">Order Items</h4>
+            <div style="border: 1px solid #eee; border-radius: 4px; padding: 0 10px;">
+                ${itemsHtml}
+            </div>
+            <div style="text-align: right; margin-top: 15px; font-size: 1.2em; font-weight: bold; color: #10b981;">
+                Total: ${order.totalAmount.toFixed(2)} DHS
+            </div>
+        </div>
+    `;
+
+    document.getElementById('order-details-body').innerHTML = contentHtml;
+    document.getElementById('order-details-modal').classList.add('active');
+};
+
+window.closeOrderDetailsModal = function() {
+    const modal = document.getElementById('order-details-modal');
+    if(modal) modal.classList.remove('active');
+};
+
+// ========================================
+// ACTIONS
+// ========================================
+window.deleteUser = async (id) => {
+    if(!confirm("Delete User?")) return;
+    await fetch(`${BASE_URL}/users/${id}`, { method: 'DELETE', headers: getAuthHeaders() });
+    fetchAllData();
+};
+
+window.deleteProduct = async (id) => {
+    if(!confirm("Delete Product?")) return;
+    await fetch(`${BASE_URL}/api/products/${id}`, { method: 'DELETE', headers: getAuthHeaders() });
+    fetchAllData();
+};
+
+window.saveProduct = async (e) => {
+    e.preventDefault();
+    const data = {
+        name: document.getElementById('product-name').value,
+        category: document.getElementById('product-category').value,
+        price: Number(document.getElementById('product-price').value),
+        imageUrl: document.getElementById('product-image').value,
+        stock: document.getElementById('product-stock').value === 'true',
+        description: "New Product"
+    };
+
+    await fetch(`${BASE_URL}/api/products`, {
+        method: 'POST',
+        headers: getAuthHeaders(),
+        body: JSON.stringify(data)
+    });
+    
     document.getElementById('product-modal').classList.remove('active');
-}
+    fetchAllData();
+};
 
-window.closeUserModal = function() {
-    document.getElementById('user-modal').classList.remove('active');
-}
-
-window.closeOrderModal = function() {
-    document.getElementById('order-modal').classList.remove('active');
-}
-
+// ========================================
+// TABS & UI
+// ========================================
 function initTabs() {
-    const tabButtons = document.querySelectorAll('.tab-btn');
-    const tabContents = document.querySelectorAll('.tab-content');
-
-    tabButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const targetTab = btn.getAttribute('data-tab');
-
-            tabButtons.forEach(b => b.classList.remove('active'));
-            tabContents.forEach(c => c.classList.remove('active'));
-
-            btn.classList.add('active');
-            const targetContent = document.getElementById(`${targetTab}-tab`);
-            if (targetContent) {
-                targetContent.classList.add('active');
-            }
-
-            if (targetTab === 'stats') {
-                updateStatistics();
-            }
+    document.querySelectorAll('.tab-btn').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            tab.classList.add('active');
+            document.getElementById(`${tab.dataset.tab}-tab`).classList.add('active');
         });
     });
+    
+    const pForm = document.getElementById('product-form');
+    if(pForm) pForm.addEventListener('submit', window.saveProduct);
+    
+    window.openProductModal = () => document.getElementById('product-modal').classList.add('active');
+    window.closeProductModal = () => document.getElementById('product-modal').classList.remove('active');
 }
 
 function initSearch() {
-    const userSearch = document.getElementById('user-search');
-    const orderSearch = document.getElementById('order-search');
-    const productSearch = document.getElementById('product-search');
-
-    if(userSearch) userSearch.addEventListener('input', (e) => renderUsers(e.target.value));
-    if(orderSearch) orderSearch.addEventListener('input', (e) => renderOrders(e.target.value));
-    if(productSearch) productSearch.addEventListener('input', (e) => renderProducts(e.target.value));
+    document.getElementById('user-search').addEventListener('input', (e) => renderUsers(e.target.value));
+    document.getElementById('order-search').addEventListener('input', (e) => renderOrders(e.target.value));
+    document.getElementById('product-search').addEventListener('input', (e) => renderProducts(e.target.value));
 }
-
-function showNotification(message, type = 'info') {
-    const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-    notification.style.cssText = `
-        position: fixed;
-        top: 5rem;
-        right: 2rem;
-        padding: 1rem 1.5rem;
-        background-color: ${type === 'success' ? '#10b981' : '#ef4444'};
-        color: white;
-        border-radius: 0.5rem;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        z-index: 10000;
-        animation: slideIn 0.3s ease;
-    `;
-    notification.textContent = message;
-
-    document.body.appendChild(notification);
-
-    setTimeout(() => {
-        notification.style.animation = 'slideOut 0.3s ease';
-        setTimeout(() => notification.remove(), 300);
-    }, 3000);
-}
-
-// ========================================
-// 6. INITIALIZATION
-// ========================================
-
-document.addEventListener('DOMContentLoaded', () => {
-    console.log(' Admin Panel Initializing...');
-    
-    // Attach functions to window so HTML can access them (needed for onclick="")
-    window.deleteUser = deleteUser;
-    window.deleteProduct = deleteProduct;
-    window.saveProduct = saveProduct;
-
-    // Event Listeners for Forms
-    const productForm = document.getElementById('product-form');
-    if(productForm) productForm.addEventListener('submit', saveProduct);
-
-    // Close Modals on Outside Click
-    window.addEventListener('click', (e) => {
-        if (e.target.classList.contains('modal')) {
-            e.target.classList.remove('active');
-        }
-    });
-
-    initTabs();
-    initSearch();
-    
-    // Start data fetch
-    fetchAllData();
-});
-
-// Dynamic Styles for Admin
-const adminStyles = document.createElement('style');
-adminStyles.textContent = `
-    @keyframes slideIn {
-        from { transform: translateX(400px); opacity: 0; }
-        to { transform: translateX(0); opacity: 1; }
-    }
-    @keyframes slideOut {
-        from { transform: translateX(0); opacity: 1; }
-        to { transform: translateX(400px); opacity: 0; }
-    }
-    .status-active { background-color: #dcfce7; color: #166534; padding: 4px 10px; border-radius: 20px; font-weight: bold; font-size: 0.8em; }
-    .status-inactive { background-color: #f3f4f6; color: #4b5563; padding: 4px 10px; border-radius: 20px; font-weight: bold; font-size: 0.8em; }
-    .role-badge { background-color: #dbeafe; color: #1e40af; padding: 4px 10px; border-radius: 20px; font-weight: bold; font-size: 0.8em; }
-    .stock-in { background-color: #dcfce7; color: #166534; }
-    .stock-out { background-color: #fee2e2; color: #991b1b; }
-`;
-document.head.appendChild(adminStyles);

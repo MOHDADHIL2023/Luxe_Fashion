@@ -698,3 +698,18 @@ form {
     
     .admin-container { padding: 0 2rem 4rem; }
 }
+
+.table-img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+.role-badge {
+    background: #e0f2fe;
+    color: #0284c7;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}

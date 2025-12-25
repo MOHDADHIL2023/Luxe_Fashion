@@ -2,8 +2,8 @@
 // API CONFIGURATION
 // =============================================
 
-// Backend API Base URL
-const API_URL = 'http://localhost:5001/Frontend/pages/products.html';
+// Backend API Base URL (Must be the server root)
+const API_URL = 'http://localhost:5001'; 
 
 // Google Client ID
 const GOOGLE_CLIENT_ID = '46629384050-lmcb75sc7a8g69sc1s0hbt1rh3ahnelf.apps.googleusercontent.com';

@@ -8,16 +8,13 @@
     <link rel="stylesheet" href="/Frontend/css/styles7.css">
     <link rel="icon" type="image/x-icon" href="/Frontend/images/LUXE LOGO.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
     
-    <!-- Header/Navigation Section -->
+    <!-- Header -->
     <header class="container">
         <div class="header-content">
-            <!-- Logo Structure for styling -->
             <a href="/Frontend/index.html" class="LOGO">LU<span class="LOGO1">XE</span><span class="LOGO2">.</span></a>
-
             <nav class="nav-desktop">
                 <a href="/Frontend/index.html">HOME</a>
                 <a href="/Frontend/pages/products.html">PRODUCTS</a>
@@ -26,83 +23,58 @@
                 <a href="/Frontend/pages/blog.html">BLOG</a>
                 <a href="/Frontend/pages/contact.html">CONTACT</a>
             </nav>
-
             <div class="button-icons">
-                <button class="Search-Button" onclick="handleSearchClick()">
-                    <i class="fas fa-search"></i> 
-                </button>
-
-                <button class="Cart-Button" onclick="addToCartBtn()">
-                    <i class="fas fa-shopping-cart"></i> 
-                </button>
-
-                <button class="Login-Signup-Button" onclick="handleLoginSignup()">
-                    <i class="fa fa-user"></i> 
-                </button>
-
-                <button class="Menu-Button" id="menu-button" aria-expanded="false" aria-controls="menu-button">
-                    <i class="fa fa-bars"></i>
-                </button>
+                <button class="Search-Button" onclick="handleSearchClick()"><i class="fas fa-search"></i></button>
+                <button class="Cart-Button" onclick="addToCartBtn()"><i class="fas fa-shopping-cart"></i></button>
+                <button class="Login-Signup-Button" onclick="handleLoginSignup()"><i class="fa fa-user"></i></button>
+                <button class="Menu-Button" id="menu-button"><i class="fa fa-bars"></i></button>
             </div>
         </div>
     </header>
 
-    <!-- Mobile Menu Off-Canvas -->
+    <!-- Mobile Menu -->
     <div id="menu-mobile" class="Menu-Mobile">
         <div class="menu-content">
-            <button class="Close-Menu-Button" id="close-menu-button" aria-expanded="false" aria-controls="menu-button">
-                <i class="fa fa-bars"></i>
-            </button>
-                <a href="/Frontend/index.html">HOME</a>
-                <a href="/Frontend/pages/products.html">PRODUCTS</a>
-                <a href="/Frontend/pages/categories.html">CATEGORIES</a>
-                <a href="/Frontend/pages/about.html">ABOUT</a>
-                <a href="/Frontend/pages/blog.html">BLOG</a>
-                <a href="/Frontend/pages/contact.html">CONTACT</a>
+            <button class="Close-Menu-Button" id="close-menu-button"><i class="fa fa-times"></i></button>
+            <a href="/Frontend/index.html">HOME</a>
+            <a href="/Frontend/pages/products.html">PRODUCTS</a>
+            <a href="/Frontend/pages/categories.html">CATEGORIES</a>
+            <a href="/Frontend/pages/about.html">ABOUT</a>
+            <a href="/Frontend/pages/blog.html">BLOG</a>
+            <a href="/Frontend/pages/contact.html">CONTACT</a>
         </div>
     </div>
 
-    <!-- Cart Hero Section -->
+    <!-- Hero -->
     <main class="Cart-Hero-Section">
         <div class="Cart-Content">
-            <h1 class="text-animation">
-                Shopping
-                <span class="Block-Logo">Cart</span>
-            </h1>
-
-            <p class="text-animation" style="animation-delay: 0.4s;">
-                Review your selected items and proceed to secure checkout.
-            </p>
+            <h1 class="text-animation">Shopping <span class="Block-Logo">Cart</span></h1>
+            <p class="text-animation" style="animation-delay: 0.4s;">Review your selected items and proceed to secure checkout.</p>
         </div>
     </main>
 
-    <!-- Main Cart Content Area -->
+    <!-- Cart Content -->
     <main class="container py-8">
         <div id="cart-content">
-            
-            <!-- Empty Cart Section -->
+            <!-- Empty Cart -->
             <section id="empty-cart-area" class="empty-cart-section hidden">
                 <i class="fas fa-shopping-basket"></i>
                 <h2>Your Cart is Empty</h2>
-                <p>It looks like you haven't added any items to your cart yet. Discover our luxurious collections now!</p>
-                
+                <p>Discover our luxurious collections now!</p>
                 <a href="/Frontend/pages/products.html" class="shop-now-btn">
                     <i class="fas fa-shopping-bag"></i> Start Shopping
                 </a>
             </section>
             
-            <!-- Full Cart View (Hidden by default, shown when cart has items) -->
-            <div id="full-cart-view" class="hidden">
-                <!-- Cart items will be dynamically rendered here by JavaScript -->
-            </div>
-            
+            <!-- Full Cart -->
+            <div id="full-cart-view" class="hidden"></div>
         </div>
     </main>
 
     <!-- Footer Section -->
     <footer>
         <div class="footer-content">
-            <!-- column number 1 logo and description -->
+            <!-- Column 1: Logo and Description -->
             <div class="footer-column footer-logo-col">
                 <div class="footer-logo">
                     <a href="/Frontend/index.html" class="LOGO5">LU<span class="LOGO6">XE</span><span class="LOGO7">.</span></a>
@@ -113,21 +85,21 @@
                 </p>
             </div>
 
-            <!-- column number two shop links -->
+            <!-- Column 2: Shop Links -->
             <div class="footer-column footer-links">
                 <h4>Shop</h4>
                 <a href="/Frontend/pages/products.html">All Products</a>
                 <a href="/Frontend/pages/categories.html">Categories</a>
             </div>
 
-            <!-- column number three account links -->
+            <!-- Column 3: Account Links -->
             <div class="footer-column footer-links">
                 <h4>Account</h4>
                 <a href="/Frontend/pages/orders.html">My Orders</a>
                 <a href="/Frontend/pages/cart.html">Shopping Cart</a>
             </div>
 
-            <!-- column number four support links -->
+            <!-- Column 4: Support Links -->
             <div class="footer-column footer-links">
                 <h4>Support</h4>
                 <a href="#">My Account</a>
@@ -135,7 +107,7 @@
                 <a href="#">FAQ</a>
             </div>
 
-            <!-- column number five connect / social media -->
+            <!-- Column 5: Connect / Social Media -->
             <div class="footer-column footer-links">
                 <h4>Connect</h4>
                 <div class="social-icons">
@@ -146,14 +118,15 @@
             </div>
         </div>
 
-        <!-- copyrights and credits tag -->
+        <!-- Copyrights and Credits -->
         <div class="copyright">
             &copy; 2025 LUXE. All rights reserved. Made By Adil Hossain
         </div>
     </footer>
 
-    <script src="/Frontend/js/script.js"></script>
+    <!-- CORRECT SCRIPT ORDER -->
     <script src="/Frontend/js/config.js"></script> 
+    <script src="/Frontend/js/script.js"></script>
     <script src="/Frontend/js/script7.js"></script>
 </body>
 </html>
