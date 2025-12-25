@@ -198,7 +198,7 @@ router.post('/login', async (req, res) => {
             });
         }
 
-        console.log(' User found:', user.email);
+        console.log('👤 User found:', user.email);
 
         // Check if password field exists
         if (!user.password) {
@@ -497,7 +497,7 @@ router.delete('/:id', auth, adminOnly, async (req, res) => {
             return res.status(404).json({ error: 'User not found' });
         }
 
-        console.log(' User deleted:', deletedUser.email);
+        console.log('🗑️ User deleted:', deletedUser.email);
 
         res.json({
             success: true,
